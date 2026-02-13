@@ -1,6 +1,7 @@
 import pygame
 import parametres
 import bouton
+import random
 from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell,etat_du_jeu
 screen = parametres.ecran
 
@@ -12,10 +13,19 @@ class player():
         self.power = 10
         self.couleur = parametres.BLEU_FONCE
 
+class mob():
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+        self.life = 20
+        self.power = 5
+        self.couleur = parametres.ROUGE_FONCE
+
 class case():
     def __init__(self,x,y):
         self.x = x
         self.y = y
+        self.contenu = None
         self.couleur = parametres.NOIR
 
 def creer_grille(n:int)->dict:
@@ -60,6 +70,21 @@ def afficher_joueur(screen, joueur):
 
     pygame.draw.rect(screen, joueur.couleur, rect)
 
+def afficher_mob(screen, mob):
+    largeur_grille = parametres.taille_grille * taille_cell
+    hauteur_grille = parametres.taille_grille * taille_cell
+
+    offset_x = (screen.get_width() - largeur_grille) // 2
+    offset_y = (screen.get_height() - hauteur_grille) // 2
+
+    rect = pygame.Rect(
+        offset_x + mob.x * taille_cell,
+        offset_y + mob.y * taille_cell,
+        taille_cell,
+        taille_cell
+    )
+
+    pygame.draw.rect(screen, mob.couleur, rect)
 
 def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
     if isinstance(texte,list):
@@ -68,5 +93,13 @@ def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
     rendu = taille.render(texte, True, couleur)
     screen.blit(rendu, ((x+largeur//2)-100, y+hauteur//2))
 
+def placer_mob(grille,mob):
+    liste_mob = []
+    for i in range(10):
+        x = random.randint(0, parametres.taille_grille - 1)
+        y = random.randint(0, parametres.taille_grille - 1)
+
+        liste_mob.append(mob(x,y))
+        grille[x,y].contenu = liste_mob[-1]
 
 pygame.init()

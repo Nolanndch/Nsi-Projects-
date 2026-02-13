@@ -48,6 +48,14 @@ def play(screen,grille_jeu,joueur):
     fonction.afficher_grille(screen,grille_jeu)
     fonction.afficher_joueur(screen,joueur)
 
+    for c in grille_jeu.values():
+        if c.contenu != None and c.contenu != joueur:
+            pygame.draw.circle(
+                screen, c.contenu.couleur, (
+                (screen.get_width() - parametres.taille_grille * taille_cell) // 2 + c.x * taille_cell + taille_cell // 2,
+                (screen.get_height() - parametres.taille_grille * taille_cell) // 2 + c.y * taille_cell + taille_cell // 2
+            ), taille_cell // 2 - 2)
+
     pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.exit_bt)
     fonction.afficher_texte(
         bouton.exit_txt,
@@ -72,6 +80,18 @@ def parametre(screen):
 
 def rules(screen):
     screen.fill(parametres.JAUNE_CLAIR)
+
+    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.exit_bt)
+    fonction.afficher_texte(
+        bouton.exit_txt,
+        xbouton - 600, ybouton -422,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
+
+def combat(screen):
+    screen.fill(parametres.ROUGE_CLAIR)
 
     pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.exit_bt)
     fonction.afficher_texte(
