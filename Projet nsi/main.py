@@ -10,6 +10,8 @@ grille_jeu = fonction.creer_grille(parametres.taille_grille)
 j1 = fonction.player(5, 6)
 grille_jeu[j1.x, j1.y].contenu = j1
 
+#gougougaga
+
 loop = True
 while loop :
     for event in pygame.event.get():
