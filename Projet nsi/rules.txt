@@ -1,0 +1,9 @@
+Une grille sera au centre de l'ecran faisant office de terrain de jeu 
+Sur cette grille figuereront des mobs le personnage du joeur et des coffres contenant des objets 
+En se deplacant le joueur devra ramasser des objets lui permettant d'ameliorer ses stats (+ de vie ou de degats)
+Il pourra aussi se battre ou fuir face a des monstres et utiliser des objets de son inventaire pour gagner face a ceux si
+Un choix sera possible quand a la difficulté du jeu allant de facile, moyen a difficile 
+l'ecran sera separé entre le jeu au centre le personnage et ses stats a droite et son inventaire a droite aussi avec 
+un menu et un moyen de mettre pause au jeu ou encore sauvegarder 
+Le code du jeu permettra l'ajout de nouveux mobs ou objets facillement
+waves -> nombre de vague d'enemis dependant de la difficulté du jeu 
