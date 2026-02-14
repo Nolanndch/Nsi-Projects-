@@ -1,9 +1,12 @@
 Une grille sera au centre de l'ecran faisant office de terrain de jeu 
-Sur cette grille figuereront des mobs le personnage du joeur et des coffres contenant des objets 
+Sur cette grille figuereront des mobs le personnage du joueur et des coffres contenant des objets 
 En se deplacant le joueur devra ramasser des objets lui permettant d'ameliorer ses stats (+ de vie ou de degats)
 Il pourra aussi se battre ou fuir face a des monstres et utiliser des objets de son inventaire pour gagner face a ceux si
 Un choix sera possible quand a la difficulté du jeu allant de facile, moyen a difficile 
-l'ecran sera separé entre le jeu au centre le personnage et ses stats a droite et son inventaire a droite aussi avec 
-un menu et un moyen de mettre pause au jeu ou encore sauvegarder 
 Le code du jeu permettra l'ajout de nouveux mobs ou objets facillement
 waves -> nombre de vague d'enemis dependant de la difficulté du jeu 
+Mode solo et 1c1 :
+solo le but est de survivre a toutes les vagues 
+1c1 le but est de ramasser le plus d'objets sur la map avant la fin du decompte puis le combat commence ,
+ 1 joueur tiré au hasard peut attaquer en premier puis le combat se deroule en tour par tour avec possibilité 
+ d'utiliser les objets ramassés a chaque tour
