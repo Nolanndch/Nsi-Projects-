@@ -1,6 +1,5 @@
 import pygame
 import parametres
-import bouton
 import random
 from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell,etat_du_jeu
 screen = parametres.ecran
@@ -13,6 +12,17 @@ class player():
         self.power = 10
         self.couleur = parametres.BLEU_FONCE
 
+    def attaquer(self, mob):
+        mob.life -= self.power
+
+    def soigner(self,pv):
+        self.life += pv
+    
+    def proteger(self,pv):
+        self.life += pv
+
+j1 = player(5, 6)
+
 class mob():
     def __init__(self,x,y):
         self.x = x
@@ -20,6 +30,9 @@ class mob():
         self.life = 20
         self.power = 5
         self.couleur = parametres.ROUGE_FONCE
+    
+    def attaquer(self, player):
+        player.life -= self.power
 
 class case():
     def __init__(self,x,y):
@@ -93,13 +106,12 @@ def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
     rendu = taille.render(texte, True, couleur)
     screen.blit(rendu, ((x+largeur//2)-100, y+hauteur//2))
 
-def placer_mob(grille,mob):
-    liste_mob = []
+def placer_mob(grille):
     for i in range(10):
         x = random.randint(0, parametres.taille_grille - 1)
         y = random.randint(0, parametres.taille_grille - 1)
 
-        liste_mob.append(mob(x,y))
-        grille[x,y].contenu = liste_mob[-1]
+        if grille[x,y].contenu == None:
+            grille[x,y].contenu = mob(x,y)
 
 pygame.init()

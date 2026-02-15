@@ -13,3 +13,6 @@ rules_txt = "Règles du jeu"
 
 exit_bt = pygame.Rect(xbouton-600,ybouton-400,largeur_bouton//3,hauteur_bouton//2, border_radius = 1000)
 exit_txt = "exit"
+
+attaquer_bt = pygame.Rect(xbouton,ybouton,largeur_bouton,hauteur_bouton, border_radius = 1000)
+attaquer_txt = "Attaquer"

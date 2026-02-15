@@ -2,6 +2,7 @@ import pygame
 import parametres
 import bouton
 import fonction
+from fonction import j1
 from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell,etat_du_jeu
 screen = parametres.ecran
 
@@ -49,7 +50,7 @@ def play(screen,grille_jeu,joueur):
     fonction.afficher_joueur(screen,joueur)
 
     for c in grille_jeu.values():
-        if c.contenu != None and c.contenu != joueur:
+        if c.contenu != None:
             pygame.draw.circle(
                 screen, c.contenu.couleur, (
                 (screen.get_width() - parametres.taille_grille * taille_cell) // 2 + c.x * taille_cell + taille_cell // 2,
@@ -97,6 +98,28 @@ def combat(screen):
     fonction.afficher_texte(
         bouton.exit_txt,
         xbouton - 600, ybouton -422,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
+    pygame.draw.rect(screen, parametres.ROUGE_FONCE, bouton.attaquer_bt)
+    fonction.afficher_texte(
+        bouton.attaquer_txt,
+        xbouton, ybouton,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
+    fonction.afficher_texte(
+        f"vie restante : {str(j1.life)}",
+        xbouton, ybouton -100,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
+    fonction.afficher_texte(
+        f"vie du mob : {str(fonction.mob(j1.x,j1.y).life)}",
+        xbouton, ybouton -150,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text
