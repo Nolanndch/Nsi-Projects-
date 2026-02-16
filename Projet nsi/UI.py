@@ -2,7 +2,8 @@ import pygame
 import parametres
 import bouton
 import fonction
-from fonction import j1
+import entities
+from entities import j1, ennemi_en_combat
 from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell,etat_du_jeu
 screen = parametres.ecran
 
@@ -111,14 +112,14 @@ def combat(screen):
         parametres.taille_text
     )
     fonction.afficher_texte(
-        f"vie restante : {str(j1.life)}",
+        f"vie restante : {str(entities.j1.life)}",
         xbouton, ybouton -100,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text
     )
     fonction.afficher_texte(
-        f"vie du mob : {str(fonction.mob(j1.x,j1.y).life)}",
+        f"vie du mob : {str(entities.ennemi_en_combat.life)}",
         xbouton, ybouton -150,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,

@@ -1,38 +1,9 @@
 import pygame
 import parametres
 import random
+import entities
 from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell,etat_du_jeu
 screen = parametres.ecran
-
-class player():
-    def __init__(self,x,y):
-        self.x = x
-        self.y = y
-        self.life = 50
-        self.power = 10
-        self.couleur = parametres.BLEU_FONCE
-
-    def attaquer(self, mob):
-        mob.life -= self.power
-
-    def soigner(self,pv):
-        self.life += pv
-    
-    def proteger(self,pv):
-        self.life += pv
-
-j1 = player(5, 6)
-
-class mob():
-    def __init__(self,x,y):
-        self.x = x
-        self.y = y
-        self.life = 20
-        self.power = 5
-        self.couleur = parametres.ROUGE_FONCE
-    
-    def attaquer(self, player):
-        player.life -= self.power
 
 class case():
     def __init__(self,x,y):
@@ -112,6 +83,6 @@ def placer_mob(grille):
         y = random.randint(0, parametres.taille_grille - 1)
 
         if grille[x,y].contenu == None:
-            grille[x,y].contenu = mob(x,y)
+            grille[x,y].contenu = entities.mob(x,y)
 
 pygame.init()

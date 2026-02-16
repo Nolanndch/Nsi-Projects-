@@ -3,7 +3,7 @@ import parametres
 import bouton
 import UI
 import fonction
-from fonction import j1
+import entities
 from parametres import etat_du_jeu
 screen = parametres.ecran
 grille_jeu = fonction.creer_grille(parametres.taille_grille)
@@ -26,28 +26,33 @@ while loop :
                     
                 if etat_du_jeu == "play" :
                     if event.key == pygame.K_UP:
-                        if grille_jeu[j1.x, j1.y - 1].contenu == None:
-                            j1.y-=1
+                        if grille_jeu[entities.j1.x, entities.j1.y - 1].contenu == None:
+                            entities.j1.y-=1
                         else:
-                            etat_du_jeu = 'combat'
+                            entities.ennemi_en_combat = grille_jeu[entities.j1.x,entities.j1.y - 1].contenu
+                            etat_du_jeu = "combat"
 
                     if event.key == pygame.K_DOWN:
-                        if grille_jeu[j1.x, j1.y + 1].contenu == None:
-                            j1.y+=1
+                        if grille_jeu[entities.j1.x, entities.j1.y + 1].contenu == None:
+                            entities.j1.y+=1
                         else:
-                            etat_du_jeu = 'combat'
+                            entities.ennemi_en_combat = grille_jeu[entities.j1.x, entities.j1.y + 1].contenu
+                            etat_du_jeu = "combat"
 
                     if event.key == pygame.K_LEFT:
-                        if grille_jeu[j1.x - 1, j1.y].contenu == None:
-                            j1.x-=1
+                        if grille_jeu[entities.j1.x - 1, entities.j1.y].contenu == None:
+                            entities.j1.x-=1
                         else:
-                            etat_du_jeu = 'combat'
+                            entities.ennemi_en_combat = grille_jeu[entities.j1.x - 1, entities.j1.y].contenu
+                            etat_du_jeu = "combat"
 
                     if event.key == pygame.K_RIGHT:
-                        if grille_jeu[j1.x + 1, j1.y].contenu == None:
-                            j1.x+=1
+                        if grille_jeu[entities.j1.x + 1, entities.j1.y].contenu == None:
+                            entities.j1.x+=1
                         else:   
-                            etat_du_jeu = 'combat'
+                            entities.ennemi_en_combat = grille_jeu[entities.j1.x +1, entities.j1.y].contenu
+                            etat_du_jeu = "combat"
+
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if etat_du_jeu == 'menu':
@@ -78,15 +83,18 @@ while loop :
                     etat_du_jeu = 'play' 
 
                 if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
-                    for c in grille_jeu.values():
-                        if (c.x,c.y) == (j1.x,j1.y) :
-                            j1.attaquer(c.contenu)
+                    if entities.ennemi_en_combat != None :
+                        entities.j1.attaquer(entities.ennemi_en_combat)
+                        if entities.ennemi_en_combat.life <= 0 :
+                            grille_jeu[entities.ennemi_en_combat.x, entities.ennemi_en_combat.y].contenu = None
+                            entities.ennemi_en_combat = None
+                            etat_du_jeu = 'play'
 
     if etat_du_jeu == "menu" :
         UI.menu(screen)
 
     if etat_du_jeu == "play":
-        UI.play(screen,grille_jeu,j1)
+        UI.play(screen,grille_jeu,entities.j1)
         
     if etat_du_jeu == 'parametre':
         UI.parametre(screen)
