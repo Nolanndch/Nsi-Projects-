@@ -66,6 +66,13 @@ def play(screen,grille_jeu,joueur):
         parametres.NOIR,
         parametres.taille_text
     )
+    fonction.afficher_texte(
+        "vague "+str(parametres.wave_number),
+        xbouton+50, ybouton - 422,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
     
     
 def parametre(screen):

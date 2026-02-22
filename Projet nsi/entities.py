@@ -5,7 +5,7 @@ class player():
         self.x = x
         self.y = y
         self.life = 50
-        self.power = 10
+        self.power = 50
         self.couleur = parametres.BLEU_FONCE
 
     def attaquer(self, mob):

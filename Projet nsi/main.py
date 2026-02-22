@@ -95,6 +95,7 @@ while loop :
 
     if etat_du_jeu == "play":
         UI.play(screen,grille_jeu,entities.j1)
+        fonction.wave(grille_jeu)
         
     if etat_du_jeu == 'parametre':
         UI.parametre(screen)

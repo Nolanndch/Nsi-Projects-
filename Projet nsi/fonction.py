@@ -78,11 +78,24 @@ def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
     screen.blit(rendu, ((x+largeur//2)-100, y+hauteur//2))
 
 def placer_mob(grille):
-    for i in range(10):
+
+    nb_enemie = parametres.wave_number * 10
+
+    for i in range(nb_enemie):
         x = random.randint(0, parametres.taille_grille - 1)
         y = random.randint(0, parametres.taille_grille - 1)
 
         if grille[x,y].contenu == None:
             grille[x,y].contenu = entities.mob(x,y)
+
+def wave(grille):
+    nb_enemies = 0
+    for cell in grille.values():
+        if cell.contenu != None:
+            nb_enemies += 1
+
+    if nb_enemies == 0:
+        parametres.wave_number+=1
+        placer_mob(grille)
 
 pygame.init()
