@@ -79,7 +79,7 @@ def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
 
 def placer_mob(grille):
 
-    nb_enemie = parametres.wave_number * 10
+    nb_enemie = parametres.wave_number * 1
 
     for i in range(nb_enemie):
         x = random.randint(0, parametres.taille_grille - 1)
@@ -98,4 +98,16 @@ def wave(grille):
         parametres.wave_number+=1
         placer_mob(grille)
 
+
+
+def tour(): #choisi au hasard le premier qui attaque 
+    tour= random.randint(0,1)
+
+    if tour % 2 == 0 :
+            parametres.tour_de = "Joueur"
+
+    elif tour%2 != 0 :
+            parametres.tour_de = "enemi"
+
 pygame.init()
+

@@ -5,7 +5,7 @@ class player():
         self.x = x
         self.y = y
         self.life = 50
-        self.power = 50
+        self.power = 10
         self.couleur = parametres.BLEU_FONCE
 
     def attaquer(self, mob):
@@ -23,11 +23,14 @@ class mob():
     def __init__(self,x,y):
         self.x = x
         self.y = y
-        self.life = 20
+        self.life = 50
         self.power = 5
         self.couleur = parametres.ROUGE_FONCE
     
     def attaquer(self, player):
         player.life -= self.power
+
+    def se_soigner(self):
+        self.life+=10
 
 ennemi_en_combat = None

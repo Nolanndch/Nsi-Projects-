@@ -132,3 +132,10 @@ def combat(screen):
         parametres.NOIR,
         parametres.taille_text
     )
+    fonction.afficher_texte(
+        f"Tour de : {str(parametres.tour_de)}",
+        xbouton, ybouton -422,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )

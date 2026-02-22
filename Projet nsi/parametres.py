@@ -15,6 +15,12 @@ taille_cell = 20
 taille_grille = 40
 etat_du_jeu = "menu"
 wave_number = 1
+tour_de = None
+
+dernier_mouvement = 0
+delai_mouvement = 200
+dernier_changement = 0
+delai_combat = 800
 
 #Couleurs :
 
