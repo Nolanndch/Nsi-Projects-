@@ -3,8 +3,7 @@ import parametres
 import bouton
 import fonction
 import entities
-from entities import j1, ennemi_en_combat
-from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell,etat_du_jeu
+from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell
 screen = parametres.ecran
 
 def menu(screen):

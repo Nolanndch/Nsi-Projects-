@@ -2,7 +2,7 @@ import pygame
 import parametres
 import random
 import entities
-from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell,etat_du_jeu
+from parametres import taille_cell
 screen = parametres.ecran
 
 class case():
@@ -127,17 +127,28 @@ def player_can_move(direction):
         return entities.j1.y - 1 >= 0
     
     if direction == "bas":
-        return entities.j1.y + 1 < parametres.ymax
+        return entities.j1.y + 1 < parametres.ymax + 1
 
     if direction == "gauche":
         return entities.j1.x - 1 >= 0
 
     if direction == "droite":
-        return entities.j1.x + 1 < parametres.xmax
+        return entities.j1.x + 1 < parametres.xmax + 1
 
 def player_rencontre_mob(grille):
     contenu = grille[entities.j1.x,entities.j1.y].contenu
 
-    if contenu.__class__.__name__ == "Mob":
+    if isinstance(contenu,entities.Mob):
         parametres.etat_du_jeu = "combat"
         entities.ennemi_en_combat = grille[entities.j1.x,entities.j1.y].contenu
+
+def etat_precedent(loop):
+    if parametres.etat_du_jeu == "menu":
+        loop = False 
+        pygame.quit()
+
+    if parametres.etat_du_jeu == "play" or parametres.etat_du_jeu == "parametre" or parametres.etat_du_jeu == "rules":
+        parametres.etat_du_jeu = "menu"
+
+    if parametres.etat_du_jeu == "combat":
+        parametres.etat_du_jeu = "play"
