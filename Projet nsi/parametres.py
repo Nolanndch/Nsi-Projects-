@@ -16,9 +16,15 @@ taille_grille = 40
 etat_du_jeu = "menu"
 wave_number = 1
 tour_de = None
+taille_inventaire = 5
+
+xmin = 0
+xmax = taille_grille - 1
+ymin = 0
+ymax = taille_grille - 1
 
 dernier_mouvement = 0
-delai_mouvement = 200
+delai_mouvement = 100
 dernier_changement = 0
 delai_combat = 800
 

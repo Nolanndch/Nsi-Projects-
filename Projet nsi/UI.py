@@ -45,9 +45,10 @@ def menu(screen):
     )
 
 
-def play(screen,grille_jeu,joueur):
+def play(screen,grille_jeu,joueur,inventaire):
     screen.fill(parametres.VERT)
     fonction.afficher_grille(screen,grille_jeu)
+    fonction.afficher_inventaire(screen,inventaire)
     fonction.afficher_joueur(screen,joueur)
 
     for c in grille_jeu.values():
@@ -73,7 +74,6 @@ def play(screen,grille_jeu,joueur):
         parametres.NOIR,
         parametres.taille_text
     )
-    
     
 def parametre(screen):
     screen.fill(parametres.GRIS_FONCE)
@@ -135,6 +135,14 @@ def combat(screen):
     fonction.afficher_texte(
         f"Tour de : {str(parametres.tour_de)}",
         xbouton, ybouton -422,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
+    pygame.draw.rect(screen, parametres.ROUGE_FONCE, bouton.soin_bt)
+    fonction.afficher_texte(
+        bouton.soin_txt,
+        xbouton, ybouton + 70,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text

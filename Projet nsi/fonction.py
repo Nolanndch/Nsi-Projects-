@@ -10,7 +10,6 @@ class case():
         self.x = x
         self.y = y
         self.contenu = None
-        self.couleur = parametres.NOIR
 
 def creer_grille(n:int)->dict:
     dico = {}
@@ -35,8 +34,21 @@ def afficher_grille(screen, dico):
             taille_cell
         )
 
-        pygame.draw.rect(screen, cell.couleur, rect)
+        pygame.draw.rect(screen, parametres.BLEU_CLAIR, rect)
         pygame.draw.rect(screen, parametres.NOIR, rect, 1)  # contour
+
+def afficher_inventaire(screen, inventaire):
+    for cell in inventaire.values():
+        rect = pygame.Rect(
+            parametres.taille_inventaire * taille_cell,
+            parametres.taille_inventaire * taille_cell,
+            taille_cell,
+            taille_cell
+        )
+
+        pygame.draw.rect(screen, parametres.GRIS_CLAIR, rect)
+        pygame.draw.rect(screen, parametres.NOIR, rect, 1)
+
 
 def afficher_joueur(screen, joueur):
     largeur_grille = parametres.taille_grille * taille_cell
@@ -86,7 +98,7 @@ def placer_mob(grille):
         y = random.randint(0, parametres.taille_grille - 1)
 
         if grille[x,y].contenu == None:
-            grille[x,y].contenu = entities.mob(x,y)
+            grille[x,y].contenu = entities.Mob(x,y)
 
 def wave(grille):
     nb_enemies = 0
@@ -109,5 +121,23 @@ def tour(): #choisi au hasard le premier qui attaque
     elif tour%2 != 0 :
             parametres.tour_de = "enemi"
 
-pygame.init()
+def player_can_move(direction):
 
+    if direction == "haut":
+        return entities.j1.y - 1 >= 0
+    
+    if direction == "bas":
+        return entities.j1.y + 1 < parametres.ymax
+
+    if direction == "gauche":
+        return entities.j1.x - 1 >= 0
+
+    if direction == "droite":
+        return entities.j1.x + 1 < parametres.xmax
+
+def player_rencontre_mob(grille):
+    contenu = grille[entities.j1.x,entities.j1.y].contenu
+
+    if contenu.__class__.__name__ == "Mob":
+        parametres.etat_du_jeu = "combat"
+        entities.ennemi_en_combat = grille[entities.j1.x,entities.j1.y].contenu

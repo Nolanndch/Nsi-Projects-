@@ -5,9 +5,10 @@ import UI
 import fonction
 import entities
 from parametres import etat_du_jeu
-import random
+from fonction import player_can_move
 screen = parametres.ecran
 grille_jeu = fonction.creer_grille(parametres.taille_grille)
+inventaire = fonction.creer_grille(parametres.taille_inventaire)
 fonction.placer_mob(grille_jeu)
 fonction.tour()
 
@@ -63,18 +64,30 @@ while loop :
                 if bouton.exit_bt.collidepoint(pygame.mouse.get_pos()):
                         etat_du_jeu = 'play' 
 
-                if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
-                    if entities.ennemi_en_combat != None and parametres.tour_de == "Joueur" :
+                if entities.ennemi_en_combat != None and parametres.tour_de == "Joueur" : #verfifie le tour du joueur 
+                    
+                    if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
                         entities.j1.attaquer(entities.ennemi_en_combat)
                         parametres.tour_de = "enemi"
                         parametres.dernier_changement = pygame.time.get_ticks()
+                    
+                    if bouton.soin_bt.collidepoint(pygame.mouse.get_pos()):
+                        entities.j1.soigner(5)
+                        parametres.tour_de = "enemi"
+                        parametres.dernier_changement = pygame.time.get_ticks()
+
+                    
+
+    if entities.j1.life <= 1 :
+        etat_du_jeu = "mort"
 
     if etat_du_jeu == "menu" :
         UI.menu(screen)
 
     if etat_du_jeu == "play":
-        UI.play(screen,grille_jeu,entities.j1)
+        UI.play(screen,grille_jeu,entities.j1,inventaire)
         fonction.wave(grille_jeu)
+        fonction.player_rencontre_mob(grille_jeu)
 
         clock.tick(60)  # limite à 60 FPS
 
@@ -85,40 +98,28 @@ while loop :
 
             # DROITE
             if keys[pygame.K_RIGHT]:
-                if grille_jeu[entities.j1.x + 1, entities.j1.y].contenu is None:
+                if player_can_move("droite"):
                     entities.j1.x += 1
                     parametres.dernier_mouvement = temps_actuel
-                else:   
-                    entities.ennemi_en_combat = grille_jeu[entities.j1.x +1, entities.j1.y].contenu
-                    etat_du_jeu = "combat"
 
             # GAUCHE
             elif keys[pygame.K_LEFT]:
-                if grille_jeu[entities.j1.x - 1, entities.j1.y].contenu is None:
+                if player_can_move("gauche"):
                     entities.j1.x -= 1
                     parametres.dernier_mouvement = temps_actuel
 
-                else:
-                    entities.ennemi_en_combat = grille_jeu[entities.j1.x - 1, entities.j1.y].contenu
-                    etat_du_jeu = "combat"
-
             # HAUT
             elif keys[pygame.K_UP]:
-                if grille_jeu[entities.j1.x, entities.j1.y - 1].contenu is None:
+                if player_can_move("haut"):
                     entities.j1.y -= 1
                     parametres.dernier_mouvement = temps_actuel
-                else:
-                    entities.ennemi_en_combat = grille_jeu[entities.j1.x,entities.j1.y - 1].contenu
-                    etat_du_jeu = "combat"
 
             # BAS
             elif keys[pygame.K_DOWN]:
-                if grille_jeu[entities.j1.x, entities.j1.y + 1].contenu is None:
+                if player_can_move("bas"):
                     entities.j1.y += 1
                     parametres.dernier_mouvement = temps_actuel
-                else:
-                    entities.ennemi_en_combat = grille_jeu[entities.j1.x, entities.j1.y + 1].contenu
-                    etat_du_jeu = "combat"
+
 
     if etat_du_jeu == 'parametre':
         UI.parametre(screen)
