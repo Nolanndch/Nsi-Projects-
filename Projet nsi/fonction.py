@@ -40,8 +40,8 @@ def afficher_grille(screen, dico):
 def afficher_inventaire(screen, inventaire):
     for cell in inventaire.values():
         rect = pygame.Rect(
-            parametres.taille_inventaire * taille_cell,
-            parametres.taille_inventaire * taille_cell,
+            100 + cell.x * taille_cell,
+            100 + cell.y * taille_cell,
             taille_cell,
             taille_cell
         )
