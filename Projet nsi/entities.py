@@ -31,6 +31,6 @@ class Mob():
         player.life -= self.power
 
     def se_soigner(self):
-        self.life+=10
+        self.life+=5
 
 ennemi_en_combat = None

@@ -29,7 +29,10 @@ delai_mouvement = 100
 dernier_changement = 0
 delai_combat = 800
 
-dernier_bouton_click = None
+facile_clicked = False
+moyen_clicked = False
+difficile_clicked = False
+
 #Couleurs :
 
 NOIR = (0, 0, 0)

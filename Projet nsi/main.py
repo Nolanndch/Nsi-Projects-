@@ -41,18 +41,20 @@ while loop :
             if parametres.etat_du_jeu == "parametre":
                 
                 if bouton.facile_bt.collidepoint(pygame.mouse.get_pos()):
-                    bouton.facile_clicked = True
-                    parametres.dernier_bouton_click = None
-                    parametres.dernier_bouton_click = bouton.facile_clicked
+                    parametres.facile_clicked = True
+                    parametres.moyen_clicked = False
+                    parametres.difficile_clicked = False
                     
                 if bouton.moyen_bt.collidepoint(pygame.mouse.get_pos()):
-                    bouton.moyen_clicked = True
-                    parametres.dernier_bouton_click = bouton.moyen_clicked
-                    
+                    parametres.moyen_clicked = True
+                    parametres.facile_clicked = False
+                    parametres.difficile_clicked = False
+                   
                 if bouton.difficile_bt.collidepoint(pygame.mouse.get_pos()):
-                    bouton.difficile_clicked = True
-                    parametres.dernier_bouton_click = bouton.difficile_clicked
-
+                    parametres.difficile_clicked = True
+                    parametres.facile_clicked = False
+                    parametres.moyen_clicked = False
+                    
             if parametres.etat_du_jeu == 'combat':
 
                 if entities.ennemi_en_combat != None and parametres.tour_de == "Joueur" : #verfifie le tour du joueur 
@@ -141,7 +143,12 @@ while loop :
                 if entities.ennemi_en_combat.life>=10 :
                     entities.ennemi_en_combat.attaquer(entities.j1)
                     parametres.tour_de = 'Joueur'
-        
+    
+    if parametres.etat_du_jeu == "mort":
+        UI.mort(screen)
+
+
+
     pygame.display.flip()
 
 pygame.quit()

@@ -85,28 +85,35 @@ def parametre(screen):
         parametres.NOIR,
         parametres.taille_text
     )
-    pygame.draw.rect(screen,parametres.BLEU_FONCE if not bouton.facile_clicked else parametres.BLEU_CLAIR, bouton.facile_bt)
+    pygame.draw.rect(screen,parametres.BLEU_FONCE if not parametres.facile_clicked else parametres.BLEU_CLAIR, bouton.facile_bt)
     fonction.afficher_texte(
         bouton.facile_txt,
-        xbouton, ybouton,
+        xbouton -500, ybouton,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text
     )
-    pygame.draw.rect(screen,parametres.BLEU_FONCE if not bouton.moyen_clicked else parametres.BLEU_CLAIR, bouton.moyen_bt)
+    pygame.draw.rect(screen,parametres.BLEU_FONCE if not parametres.moyen_clicked else parametres.BLEU_CLAIR, bouton.moyen_bt)
     fonction.afficher_texte(
         bouton.moyen_txt,
-        xbouton, ybouton+ 70,
+        xbouton-500, ybouton+ 70,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text
     )
-    pygame.draw.rect(screen,parametres.BLEU_FONCE if not bouton.difficile_clicked else parametres.BLEU_CLAIR, bouton.difficile_bt)
+    pygame.draw.rect(screen,parametres.BLEU_FONCE if not parametres.difficile_clicked else parametres.BLEU_CLAIR, bouton.difficile_bt)
     fonction.afficher_texte(
         bouton.difficile_txt,
-        xbouton , ybouton + 140,
+        xbouton -500, ybouton + 140,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
+        parametres.taille_text
+    )
+    fonction.afficher_texte(
+        "Choisir la difficulté",
+        xbouton -500, ybouton -70,
+        largeur_bouton, hauteur_bouton,
+        parametres.BLANC,
         parametres.taille_text
     )
 
@@ -168,5 +175,17 @@ def combat(screen):
         xbouton, ybouton + 70,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
+        parametres.taille_text
+    )
+
+def mort(screen):
+    screen.fill(parametres.NOIR)
+
+
+    fonction.afficher_texte(
+        "Vous etes mort",
+        xbouton, ybouton,
+        largeur_bouton, hauteur_bouton,
+        parametres.BLANC,
         parametres.taille_text
     )

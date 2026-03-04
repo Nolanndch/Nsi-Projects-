@@ -20,14 +20,13 @@ attaquer_txt = "Attaquer"
 soin_bt = pygame.Rect(xbouton,ybouton + 70,largeur_bouton,hauteur_bouton, border_radius = 1000)
 soin_txt = "Soigner"
 
-facile_bt = pygame.Rect(xbouton,ybouton,largeur_bouton,hauteur_bouton, border_radius = 1000)
+facile_bt = pygame.Rect(xbouton-500,ybouton,largeur_bouton,hauteur_bouton, border_radius = 1000)
 facile_txt = "Facile"
-facile_clicked = False
 
-moyen_bt = pygame.Rect(xbouton,ybouton + 70,largeur_bouton,hauteur_bouton, border_radius = 1000)
+
+moyen_bt = pygame.Rect(xbouton-500,ybouton + 70,largeur_bouton,hauteur_bouton, border_radius = 1000)
 moyen_txt = "Moyen"
-moyen_clicked = False
 
-difficile_bt = pygame.Rect(xbouton,ybouton + 140,largeur_bouton,hauteur_bouton, border_radius = 1000)
+
+difficile_bt = pygame.Rect(xbouton-500,ybouton + 140,largeur_bouton,hauteur_bouton, border_radius = 1000)
 difficile_txt = "Difficile"
-difficile_clicked = False
