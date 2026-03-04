@@ -91,15 +91,34 @@ def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
 
 def placer_mob(grille):
 
-    nb_enemie = parametres.wave_number * 1
-
+    difficulter = 0
+    
+    if parametres.facile_clicked == True :
+        difficulter = 3
+    if parametres.moyen_clicked == True : 
+        difficulter = 6
+    if parametres.difficile_clicked == True:
+        difficulter = 9
+    
+    nb_enemie = parametres.wave_number * difficulter
+    
     for i in range(nb_enemie):
         x = random.randint(0, parametres.taille_grille - 1)
         y = random.randint(0, parametres.taille_grille - 1)
 
         if grille[x,y].contenu == None:
             grille[x,y].contenu = entities.Mob(x,y)
-
+            
+# pour faire spawn les objet    
+#def nb_objet(grille):
+#   for i in range(2):
+#       x = random.randint(0, parametres.taille_grille - 1)
+#       y = random.randint(0, parametres.taille_grille - 1)
+#
+#       if grille[x,y].contenu == None:
+#            grille[x,y].contenu = entities.Objet(x,y)
+    
+        
 def wave(grille):
     nb_enemies = 0
     for cell in grille.values():

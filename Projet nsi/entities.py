@@ -34,3 +34,25 @@ class Mob():
         self.life+=5
 
 ennemi_en_combat = None
+
+'''''
+Pas encore finie
+class Objet():
+    def __init__(self,name, pv, degat, protection):
+        self.name = name
+        self.pv = pv
+        self.degat = degat
+        self.protection = protection
+    
+    def nom_objet(self):
+        return self.name
+    
+    def nb_degat(self):
+        Player.power += self.nb_degat 
+
+    def pv(self):
+        Player.life += self.pv
+    
+    def protection(self):
+        Player.life += 
+'''
