@@ -37,6 +37,21 @@ while loop :
                     parametres.etat_du_jeu = 'parametre'
                 if bouton.rules_bt.collidepoint(pygame.mouse.get_pos()):
                     parametres.etat_du_jeu = 'rules' 
+                
+            if parametres.etat_du_jeu == "parametre":
+                
+                if bouton.facile_bt.collidepoint(pygame.mouse.get_pos()):
+                    bouton.facile_clicked = True
+                    parametres.dernier_bouton_click = None
+                    parametres.dernier_bouton_click = bouton.facile_clicked
+                    
+                if bouton.moyen_bt.collidepoint(pygame.mouse.get_pos()):
+                    bouton.moyen_clicked = True
+                    parametres.dernier_bouton_click = bouton.moyen_clicked
+                    
+                if bouton.difficile_bt.collidepoint(pygame.mouse.get_pos()):
+                    bouton.difficile_clicked = True
+                    parametres.dernier_bouton_click = bouton.difficile_clicked
 
             if parametres.etat_du_jeu == 'combat':
 

@@ -85,6 +85,30 @@ def parametre(screen):
         parametres.NOIR,
         parametres.taille_text
     )
+    pygame.draw.rect(screen,parametres.BLEU_FONCE if not bouton.facile_clicked else parametres.BLEU_CLAIR, bouton.facile_bt)
+    fonction.afficher_texte(
+        bouton.facile_txt,
+        xbouton, ybouton,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
+    pygame.draw.rect(screen,parametres.BLEU_FONCE if not bouton.moyen_clicked else parametres.BLEU_CLAIR, bouton.moyen_bt)
+    fonction.afficher_texte(
+        bouton.moyen_txt,
+        xbouton, ybouton+ 70,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
+    pygame.draw.rect(screen,parametres.BLEU_FONCE if not bouton.difficile_clicked else parametres.BLEU_CLAIR, bouton.difficile_bt)
+    fonction.afficher_texte(
+        bouton.difficile_txt,
+        xbouton , ybouton + 140,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
 
 def rules(screen):
     screen.fill(parametres.JAUNE_CLAIR)
