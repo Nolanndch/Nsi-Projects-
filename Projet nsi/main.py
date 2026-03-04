@@ -143,11 +143,10 @@ while loop :
                 if entities.ennemi_en_combat.life>=10 :
                     entities.ennemi_en_combat.attaquer(entities.j1)
                     parametres.tour_de = 'Joueur'
-    
+
     if parametres.etat_du_jeu == "mort":
         UI.mort(screen)
-
-
+        fonction.reset_grille(grille_jeu)
 
     pygame.display.flip()
 

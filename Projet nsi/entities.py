@@ -24,7 +24,7 @@ class Mob():
         self.x = x
         self.y = y
         self.life = 50
-        self.power = 5
+        self.power = 30
         self.couleur = parametres.ROUGE_FONCE
     
     def attaquer(self, player):

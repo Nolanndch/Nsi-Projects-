@@ -147,8 +147,14 @@ def etat_precedent(loop):
         loop = False 
         pygame.quit()
 
-    if parametres.etat_du_jeu == "play" or parametres.etat_du_jeu == "parametre" or parametres.etat_du_jeu == "rules":
+    if parametres.etat_du_jeu == "play" or parametres.etat_du_jeu == "parametre" or parametres.etat_du_jeu == "rules" or parametres.etat_du_jeu == "mort":
         parametres.etat_du_jeu = "menu"
 
     if parametres.etat_du_jeu == "combat":
         parametres.etat_du_jeu = "play"
+
+def reset_grille(grille):
+    for cell in grille.values():
+        cell.contenu = None
+    
+    placer_mob(grille)
