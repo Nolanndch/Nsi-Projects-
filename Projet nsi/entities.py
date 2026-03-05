@@ -1,6 +1,6 @@
 import parametres
 
-class Player():
+class Player():  #classe des joueurs
     def __init__(self,x,y):
         self.x = x
         self.y = y
@@ -19,7 +19,7 @@ class Player():
 
 j1 = Player(5, 6)
 
-class Mob():
+class Mob():   #classe des enemis
     def __init__(self,x,y):
         self.x = x
         self.y = y
