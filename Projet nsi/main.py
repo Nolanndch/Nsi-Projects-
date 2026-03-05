@@ -71,9 +71,6 @@ while loop :
 
                     
 
-    if entities.j1.life <= 1 :
-        parametres.etat_du_jeu = "mort"
-
     if parametres.etat_du_jeu == "menu" :
         UI.menu(screen)
 
@@ -139,10 +136,14 @@ while loop :
                 if entities.ennemi_en_combat.life<=10 :
                     entities.ennemi_en_combat.se_soigner()
                     parametres.tour_de = 'Joueur'
+                    if entities.j1.life <= 1 :
+                        parametres.etat_du_jeu = "mort"
 
                 if entities.ennemi_en_combat.life>=10 :
                     entities.ennemi_en_combat.attaquer(entities.j1)
                     parametres.tour_de = 'Joueur'
+                    if entities.j1.life <= 1 :
+                        parametres.etat_du_jeu = "mort"
 
     if parametres.etat_du_jeu == "mort":
         UI.mort(screen)
