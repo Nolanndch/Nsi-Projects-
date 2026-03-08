@@ -181,11 +181,19 @@ def combat(screen):
 def mort(screen):
     screen.fill(parametres.NOIR)
 
-
     fonction.afficher_texte(
         "Vous etes mort",
         xbouton, ybouton,
         largeur_bouton, hauteur_bouton,
         parametres.BLANC,
+        parametres.taille_text
+    )
+
+    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.exit_bt)
+    fonction.afficher_texte(
+        bouton.exit_txt,
+        xbouton - 600, ybouton -422,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
         parametres.taille_text
     )

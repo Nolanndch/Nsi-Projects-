@@ -5,13 +5,14 @@ import entities
 from parametres import taille_cell
 screen = parametres.ecran
 
-class case():
+class case(): #classe qui gere les cases et permet leur contenu
     def __init__(self,x,y):
         self.x = x
         self.y = y
         self.contenu = None
 
 def creer_grille(n:int)->dict:
+    #prend un entier en parametre et renvoie un dico de cases de n x n
     dico = {}
     for y in range(n):
         for x in range(n):
@@ -20,6 +21,7 @@ def creer_grille(n:int)->dict:
     return dico
 
 def afficher_grille(screen, dico):
+    #affiche la grille de jeu principale au centre de l'ecran
     largeur_grille = parametres.taille_grille * taille_cell
     hauteur_grille = parametres.taille_grille * taille_cell
 
@@ -35,9 +37,10 @@ def afficher_grille(screen, dico):
         )
 
         pygame.draw.rect(screen, parametres.BLEU_CLAIR, rect)
-        pygame.draw.rect(screen, parametres.NOIR, rect, 1)  # contour
+        pygame.draw.rect(screen, parametres.NOIR, rect, 1)
 
 def afficher_inventaire(screen, inventaire):
+    #affiche la grille de l'inventair en haut a gauche de l'ecran
     for cell in inventaire.values():
         rect = pygame.Rect(
             100 + cell.x * taille_cell,
@@ -51,6 +54,7 @@ def afficher_inventaire(screen, inventaire):
 
 
 def afficher_joueur(screen, joueur):
+    #affiche le joueur dans la grille de jeu principale
     largeur_grille = parametres.taille_grille * taille_cell
     hauteur_grille = parametres.taille_grille * taille_cell
 
@@ -67,6 +71,7 @@ def afficher_joueur(screen, joueur):
     pygame.draw.rect(screen, joueur.couleur, rect)
 
 def afficher_mob(screen, mob):
+    #affiche les mobs dans la grille principale
     largeur_grille = parametres.taille_grille * taille_cell
     hauteur_grille = parametres.taille_grille * taille_cell
 
@@ -83,6 +88,7 @@ def afficher_mob(screen, mob):
     pygame.draw.rect(screen, mob.couleur, rect)
 
 def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
+
     if isinstance(texte,list):
         texte = ''.join(texte)
         
@@ -90,6 +96,8 @@ def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
     screen.blit(rendu, ((x+largeur//2)-100, y+hauteur//2))
 
 def placer_mob(grille):
+    #place des mobs aleatoirement dans la grille de jeu principale
+    #le nombre de mob varie selon la difficulté et la vague en cours
 
     difficulter = 0
     
@@ -120,6 +128,7 @@ def placer_mob(grille):
     
         
 def wave(grille):
+    #chek le contenu de la grille pour changer de vague si les enemis sont morts
     nb_enemies = 0
     for cell in grille.values():
         if cell.contenu != None:
@@ -131,7 +140,8 @@ def wave(grille):
 
 
 
-def tour(): #choisi au hasard le premier qui attaque 
+def tour():
+    #choisi au hasard le premier qui attaque 
     tour= random.randint(0,1)
 
     if tour % 2 == 0 :
@@ -141,7 +151,7 @@ def tour(): #choisi au hasard le premier qui attaque
             parametres.tour_de = "enemi"
 
 def player_can_move(direction):
-
+    #verifie si le joueur peut se deplacer
     if direction == "haut":
         return entities.j1.y - 1 >= 0
     
@@ -155,6 +165,7 @@ def player_can_move(direction):
         return entities.j1.x + 1 < parametres.xmax + 1
 
 def player_rencontre_mob(grille):
+    #verifie si le joueur se trouve sur la meme case qu'un mob
     contenu = grille[entities.j1.x,entities.j1.y].contenu
 
     if isinstance(contenu,entities.Mob):
@@ -162,6 +173,7 @@ def player_rencontre_mob(grille):
         entities.ennemi_en_combat = grille[entities.j1.x,entities.j1.y].contenu
 
 def etat_precedent(loop):
+    #reviens a l'etat de jeu inferieur a celui actuel
     if parametres.etat_du_jeu == "menu":
         loop = False 
         pygame.quit()
@@ -173,6 +185,7 @@ def etat_precedent(loop):
         parametres.etat_du_jeu = "play"
 
 def reset_grille(grille):
+    #nettoie la grille apres la mort du joueur et la rend prete a reprendre une partie
     for cell in grille.values():
         cell.contenu = None
     

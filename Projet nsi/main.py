@@ -39,6 +39,8 @@ while loop :
                     parametres.etat_du_jeu = 'rules' 
                 
             if parametres.etat_du_jeu == "parametre":
+
+                #gestion des click de selection de la difficulté
                 
                 if bouton.facile_bt.collidepoint(pygame.mouse.get_pos()):
                     parametres.facile_clicked = True
@@ -55,7 +57,7 @@ while loop :
                     parametres.facile_clicked = False
                     parametres.moyen_clicked = False
                     
-            if parametres.etat_du_jeu == 'combat':
+            if parametres.etat_du_jeu == 'combat': #deroulement du combat coté joueur
 
                 if entities.ennemi_en_combat != None and parametres.tour_de == "Joueur" : #verfifie le tour du joueur 
                     
@@ -70,9 +72,6 @@ while loop :
                         parametres.dernier_changement = pygame.time.get_ticks()
 
                     
-
-    if entities.j1.life <= 1 :
-        parametres.etat_du_jeu = "mort"
 
     if parametres.etat_du_jeu == "menu" :
         UI.menu(screen)
@@ -126,6 +125,8 @@ while loop :
     if parametres.etat_du_jeu == 'combat':
         UI.combat(screen)
 
+        #déroulement du combat coté enemi
+
         if entities.ennemi_en_combat.life <= 0 :#mort de l'enemi
             grille_jeu[entities.ennemi_en_combat.x, entities.ennemi_en_combat.y].contenu = None
             entities.ennemi_en_combat = None
@@ -136,13 +137,19 @@ while loop :
 
             if temps_actuel - parametres.dernier_changement > parametres.delai_combat:
             
-                if entities.ennemi_en_combat.life<=10 :
+                if entities.ennemi_en_combat.life<=10 :  #l'enemi se soigne si life<10
                     entities.ennemi_en_combat.se_soigner()
                     parametres.tour_de = 'Joueur'
+                    #mort du joueur
+                    if entities.j1.life <= 1 :
+                        parametres.etat_du_jeu = "mort"
 
-                if entities.ennemi_en_combat.life>=10 :
+                if entities.ennemi_en_combat.life>=10 :   #l'enemi attaque 
                     entities.ennemi_en_combat.attaquer(entities.j1)
                     parametres.tour_de = 'Joueur'
+                    #mort du joueur
+                    if entities.j1.life <= 1 :
+                        parametres.etat_du_jeu = "mort"
 
     if parametres.etat_du_jeu == "mort":
         UI.mort(screen)
