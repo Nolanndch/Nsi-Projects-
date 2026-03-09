@@ -85,7 +85,7 @@ def placer_mob(grille):
     #place des mobs aleatoirement dans la grille de jeu principale
     #le nombre de mob varie selon la difficulté et la vague en cours
 
-    difficulter = 0
+    difficulter = 3
     
     if parametres.facile_clicked == True :
         difficulter = 3
