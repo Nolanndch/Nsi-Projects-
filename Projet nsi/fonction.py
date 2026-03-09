@@ -184,3 +184,12 @@ def draw_health_bar(screen, x, y, current, maximum, width=200, height=18, label=
     font = pygame.font.SysFont(None, 24)
     texte = font.render(f"{label}{current}/{maximum}", True, parametres.NOIR)
     screen.blit(texte, (x + width + 8, y))
+
+def refill(grille):
+    # replace des mobs et objets dans la grille si elle est vide
+    mobs = 0
+    for cell in grille.values():
+        if isinstance(cell.contenu,entities.Mob):
+            mobs +=1
+    if mobs == 0:
+        placer_mob(grille)
