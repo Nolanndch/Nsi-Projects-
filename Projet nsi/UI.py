@@ -6,6 +6,7 @@ import entities
 from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell
 screen = parametres.ecran
 
+#UI Menu
 def menu(screen):
     screen.fill(parametres.BLEU)
 
@@ -43,11 +44,10 @@ def menu(screen):
         parametres.taille_text
     )
 
-
-def play(screen,grille_jeu,joueur,inventaire):
+# UI PLay
+def play(screen,grille_jeu,joueur):
     screen.fill(parametres.VERT)
     fonction.afficher_grille(screen,grille_jeu)
-    fonction.afficher_inventaire(screen,inventaire)
     fonction.afficher_joueur(screen,joueur)
 
     for c in grille_jeu.values():
@@ -74,6 +74,7 @@ def play(screen,grille_jeu,joueur,inventaire):
         parametres.taille_text
     )
     
+#UI Parametre
 def parametre(screen):
     screen.fill(parametres.GRIS_FONCE)
 
@@ -117,6 +118,7 @@ def parametre(screen):
         parametres.taille_text
     )
 
+#UI Rules
 def rules(screen):
     screen.fill(parametres.JAUNE_CLAIR)
 
@@ -128,14 +130,15 @@ def rules(screen):
         parametres.NOIR,
         parametres.taille_text
     )
-
+    
+#UI Combat
 def combat(screen):
     screen.fill(parametres.ROUGE_CLAIR)
 
     pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.exit_bt)
     fonction.afficher_texte(
         bouton.exit_txt,
-        xbouton - 600, ybouton -422,
+        xbouton - 600, ybouton - 422,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text
@@ -148,23 +151,10 @@ def combat(screen):
         parametres.NOIR,
         parametres.taille_text
     )
-    fonction.afficher_texte(
-        f"vie restante : {str(entities.j1.life)}",
-        xbouton, ybouton -100,
-        largeur_bouton, hauteur_bouton,
-        parametres.NOIR,
-        parametres.taille_text
-    )
-    fonction.afficher_texte(
-        f"vie du mob : {str(entities.ennemi_en_combat.life)}",
-        xbouton, ybouton -150,
-        largeur_bouton, hauteur_bouton,
-        parametres.NOIR,
-        parametres.taille_text
-    )
+    
     fonction.afficher_texte(
         f"Tour de : {str(parametres.tour_de)}",
-        xbouton, ybouton -422,
+        xbouton, ybouton - 422,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text
@@ -177,7 +167,37 @@ def combat(screen):
         parametres.NOIR,
         parametres.taille_text
     )
+    fonction.draw_health_bar(
+        screen,
+        x=xbouton, y=ybouton - 100,
+        current=entities.j1.life,
+        maximum=entities.j1.max_life,
+        label="Joueur : "
+    )
+    fonction.draw_health_bar(
+        screen,
+        x=xbouton, y=ybouton - 150,
+        current=entities.ennemi_en_combat.life,
+        maximum=entities.ennemi_en_combat.max_life,
+        label="Ennemi : "
+    )
+    fonction.draw_health_bar(
+        screen,
+        x=xbouton, y=ybouton - 75,
+        current=entities.j1.armor,
+        maximum=entities.j1.max_armor,
+        label="Armure : ",
+        color_override=(99, 179, 237)
+    )
+    fonction.afficher_texte(
+        str(entities.j1.inventaire),
+        xbouton, ybouton + 200,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
 
+#UI Mort
 def mort(screen):
     screen.fill(parametres.NOIR)
 
