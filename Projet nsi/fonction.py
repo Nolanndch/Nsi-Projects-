@@ -111,19 +111,6 @@ def placer_mob(grille):
 #
 #       if grille[x,y].contenu == None:
 #            grille[x,y].contenu = entities.Objet(x,y)
-    
-        
-def wave(grille):
-    #chek le contenu de la grille pour changer de vague si les enemis sont morts
-    nb_enemies = 0
-    for cell in grille.values():
-        if cell.contenu != None:
-            nb_enemies += 1
-
-    if nb_enemies == 0:
-        parametres.wave_number+=1
-        placer_mob(grille)
-
 
 
 def tour():

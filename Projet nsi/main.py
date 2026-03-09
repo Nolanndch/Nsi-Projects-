@@ -75,7 +75,6 @@ while loop :
 
     if parametres.etat_du_jeu == "play":
         UI.play(screen,grille_jeu,entities.j1)
-        fonction.wave(grille_jeu)
         
 
         clock.tick(60)  # limite à 60 FPS
