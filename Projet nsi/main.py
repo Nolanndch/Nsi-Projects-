@@ -124,7 +124,7 @@ while loop :
 
     if parametres.etat_du_jeu == 'combat':
         UI.combat(screen)
-
+        
         #déroulement du combat coté enemi
 
         if entities.ennemi_en_combat.life <= 0 :#mort de l'enemi

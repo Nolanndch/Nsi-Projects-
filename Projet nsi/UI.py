@@ -129,13 +129,39 @@ def rules(screen):
         parametres.taille_text
     )
 
+def draw_health_bar(screen, x, y, current, maximum, width=200, height=18, label=""):
+    """Dessine une barre de vie dynamique avec label."""
+    ratio = max(current / maximum, 0)
+
+    # Couleur selon le pourcentage
+    if ratio > 0.6:
+        color = (34, 197, 94)    # Vert
+    elif ratio > 0.3:
+        color = (234, 179, 8)    # Jaune
+    else:
+        color = (239, 68, 68)    # Rouge
+
+    # Fond gris
+    pygame.draw.rect(screen, (60, 60, 60), (x, y, width, height), border_radius=5)
+    # Barre remplie
+    if ratio > 0:
+        pygame.draw.rect(screen, color, (x, y, int(width * ratio), height), border_radius=5)
+    # Bordure
+    pygame.draw.rect(screen, (0, 0, 0), (x, y, width, height), 2, border_radius=5)
+
+    # Label + valeur à côté
+    font = pygame.font.SysFont(None, parametres.taille_text)
+    texte = font.render(f"{label}{current}/{maximum}", True, parametres.NOIR)
+    screen.blit(texte, (x + width + 8, y))
+
+
 def combat(screen):
     screen.fill(parametres.ROUGE_CLAIR)
 
     pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.exit_bt)
     fonction.afficher_texte(
         bouton.exit_txt,
-        xbouton - 600, ybouton -422,
+        xbouton - 600, ybouton - 422,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text
@@ -148,23 +174,25 @@ def combat(screen):
         parametres.NOIR,
         parametres.taille_text
     )
-    fonction.afficher_texte(
-        f"vie restante : {str(entities.j1.life)}",
-        xbouton, ybouton -100,
-        largeur_bouton, hauteur_bouton,
-        parametres.NOIR,
-        parametres.taille_text
+    
+    draw_health_bar(
+        screen,
+        x=xbouton, y=ybouton - 100,
+        current=entities.j1.life,
+        maximum=entities.j1.max_life,
+        label="Joueur : "
     )
-    fonction.afficher_texte(
-        f"vie du mob : {str(entities.ennemi_en_combat.life)}",
-        xbouton, ybouton -150,
-        largeur_bouton, hauteur_bouton,
-        parametres.NOIR,
-        parametres.taille_text
+    draw_health_bar(
+        screen,
+        x=xbouton, y=ybouton - 150,
+        current=entities.ennemi_en_combat.life,
+        maximum=entities.ennemi_en_combat.max_life,
+        label="Ennemi : "
     )
+
     fonction.afficher_texte(
         f"Tour de : {str(parametres.tour_de)}",
-        xbouton, ybouton -422,
+        xbouton, ybouton - 422,
         largeur_bouton, hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text

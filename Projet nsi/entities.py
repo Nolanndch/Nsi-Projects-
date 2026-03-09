@@ -7,6 +7,7 @@ class Player():  #classe des joueurs
         self.life = 50
         self.power = 10
         self.couleur = parametres.BLEU_FONCE
+        self.max_life = 50
 
     def attaquer(self, mob):
         mob.life -= self.power
@@ -24,6 +25,7 @@ class Mob():   #classe des enemis
         self.x = x
         self.y = y
         self.life = 50
+        self.max_life = 50
         self.power = 30
         self.couleur = parametres.ROUGE_FONCE
     
