@@ -7,7 +7,6 @@ import entities
 from fonction import player_can_move
 screen = parametres.ecran
 grille_jeu = fonction.creer_grille(parametres.taille_grille)
-inventaire = fonction.creer_grille(parametres.taille_inventaire)
 fonction.placer_mob(grille_jeu)
 fonction.tour()
 
@@ -68,8 +67,6 @@ while loop :
                     
                     if bouton.soin_bt.collidepoint(pygame.mouse.get_pos()):
                         entities.j1.soigner(5)
-                        parametres.tour_de = "enemi"
-                        parametres.dernier_changement = pygame.time.get_ticks()
 
                     
 
@@ -77,7 +74,7 @@ while loop :
         UI.menu(screen)
 
     if parametres.etat_du_jeu == "play":
-        UI.play(screen,grille_jeu,entities.j1,inventaire)
+        UI.play(screen,grille_jeu,entities.j1)
         fonction.wave(grille_jeu)
 
         clock.tick(60)  # limite à 60 FPS
@@ -144,7 +141,7 @@ while loop :
                     if entities.j1.life <= 1 :
                         parametres.etat_du_jeu = "mort"
 
-                if entities.ennemi_en_combat.life>=10 :   #l'enemi attaque 
+                else :   #l'enemi attaque 
                     entities.ennemi_en_combat.attaquer(entities.j1)
                     parametres.tour_de = 'Joueur'
                     #mort du joueur

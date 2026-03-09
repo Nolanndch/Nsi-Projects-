@@ -39,20 +39,6 @@ def afficher_grille(screen, dico):
         pygame.draw.rect(screen, parametres.BLEU_CLAIR, rect)
         pygame.draw.rect(screen, parametres.NOIR, rect, 1)
 
-def afficher_inventaire(screen, inventaire):
-    #affiche la grille de l'inventair en haut a gauche de l'ecran
-    for cell in inventaire.values():
-        rect = pygame.Rect(
-            100 + cell.x * taille_cell,
-            100 + cell.y * taille_cell,
-            taille_cell,
-            taille_cell
-        )
-
-        pygame.draw.rect(screen, parametres.GRIS_CLAIR, rect)
-        pygame.draw.rect(screen, parametres.NOIR, rect, 1)
-
-
 def afficher_joueur(screen, joueur):
     #affiche le joueur dans la grille de jeu principale
     largeur_grille = parametres.taille_grille * taille_cell
@@ -171,3 +157,24 @@ def reset_grille(grille):
         cell.contenu = None
     
     placer_mob(grille)
+    
+def draw_health_bar(screen, x, y, current, maximum, width=200, height=18, label="", color_override=None):
+    ratio = max(current / maximum, 0)
+
+    if color_override:
+        color = color_override        # ← couleur fixe (armure)
+    elif ratio > 0.6:
+        color = (34, 197, 94)         # Vert
+    elif ratio > 0.3:
+        color = (234, 179, 8)         # Jaune
+    else:
+        color = (239, 68, 68)         # Rouge
+
+    pygame.draw.rect(screen, (60, 60, 60), (x, y, width, height), border_radius=5)
+    if ratio > 0:
+        pygame.draw.rect(screen, color, (x, y, int(width * ratio), height), border_radius=5)
+    pygame.draw.rect(screen, (0, 0, 0), (x, y, width, height), 2, border_radius=5)
+
+    font = pygame.font.SysFont(None, 24)
+    texte = font.render(f"{label}{current}/{maximum}", True, parametres.NOIR)
+    screen.blit(texte, (x + width + 8, y))

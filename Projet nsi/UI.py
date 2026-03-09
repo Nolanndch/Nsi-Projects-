@@ -6,6 +6,7 @@ import entities
 from parametres import xbouton,ybouton,largeur_bouton,hauteur_bouton,taille_cell
 screen = parametres.ecran
 
+#UI Menu
 def menu(screen):
     screen.fill(parametres.BLEU)
 
@@ -43,11 +44,10 @@ def menu(screen):
         parametres.taille_text
     )
 
-
-def play(screen,grille_jeu,joueur,inventaire):
+# UI PLay
+def play(screen,grille_jeu,joueur):
     screen.fill(parametres.VERT)
     fonction.afficher_grille(screen,grille_jeu)
-    fonction.afficher_inventaire(screen,inventaire)
     fonction.afficher_joueur(screen,joueur)
 
     for c in grille_jeu.values():
@@ -74,6 +74,7 @@ def play(screen,grille_jeu,joueur,inventaire):
         parametres.taille_text
     )
     
+#UI Parametre
 def parametre(screen):
     screen.fill(parametres.GRIS_FONCE)
 
@@ -117,6 +118,7 @@ def parametre(screen):
         parametres.taille_text
     )
 
+#UI Rules
 def rules(screen):
     screen.fill(parametres.JAUNE_CLAIR)
 
@@ -128,33 +130,8 @@ def rules(screen):
         parametres.NOIR,
         parametres.taille_text
     )
-
-def draw_health_bar(screen, x, y, current, maximum, width=200, height=18, label=""):
-    """Dessine une barre de vie dynamique avec label."""
-    ratio = max(current / maximum, 0)
-
-    # Couleur selon le pourcentage
-    if ratio > 0.6:
-        color = (34, 197, 94)    # Vert
-    elif ratio > 0.3:
-        color = (234, 179, 8)    # Jaune
-    else:
-        color = (239, 68, 68)    # Rouge
-
-    # Fond gris
-    pygame.draw.rect(screen, (60, 60, 60), (x, y, width, height), border_radius=5)
-    # Barre remplie
-    if ratio > 0:
-        pygame.draw.rect(screen, color, (x, y, int(width * ratio), height), border_radius=5)
-    # Bordure
-    pygame.draw.rect(screen, (0, 0, 0), (x, y, width, height), 2, border_radius=5)
-
-    # Label + valeur à côté
-    font = pygame.font.SysFont(None, parametres.taille_text)
-    texte = font.render(f"{label}{current}/{maximum}", True, parametres.NOIR)
-    screen.blit(texte, (x + width + 8, y))
-
-
+    
+#UI Combat
 def combat(screen):
     screen.fill(parametres.ROUGE_CLAIR)
 
@@ -175,21 +152,6 @@ def combat(screen):
         parametres.taille_text
     )
     
-    draw_health_bar(
-        screen,
-        x=xbouton, y=ybouton - 100,
-        current=entities.j1.life,
-        maximum=entities.j1.max_life,
-        label="Joueur : "
-    )
-    draw_health_bar(
-        screen,
-        x=xbouton, y=ybouton - 150,
-        current=entities.ennemi_en_combat.life,
-        maximum=entities.ennemi_en_combat.max_life,
-        label="Ennemi : "
-    )
-
     fonction.afficher_texte(
         f"Tour de : {str(parametres.tour_de)}",
         xbouton, ybouton - 422,
@@ -205,7 +167,37 @@ def combat(screen):
         parametres.NOIR,
         parametres.taille_text
     )
+    fonction.draw_health_bar(
+        screen,
+        x=xbouton, y=ybouton - 100,
+        current=entities.j1.life,
+        maximum=entities.j1.max_life,
+        label="Joueur : "
+    )
+    fonction.draw_health_bar(
+        screen,
+        x=xbouton, y=ybouton - 150,
+        current=entities.ennemi_en_combat.life,
+        maximum=entities.ennemi_en_combat.max_life,
+        label="Ennemi : "
+    )
+    fonction.draw_health_bar(
+        screen,
+        x=xbouton, y=ybouton - 75,
+        current=entities.j1.armor,
+        maximum=entities.j1.max_armor,
+        label="Armure : ",
+        color_override=(99, 179, 237)
+    )
+    fonction.afficher_texte(
+        str(entities.j1.inventaire),
+        xbouton, ybouton + 200,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
 
+#UI Mort
 def mort(screen):
     screen.fill(parametres.NOIR)
 
