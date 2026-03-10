@@ -80,13 +80,13 @@ def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
         
     rendu = taille.render(texte, True, couleur)
     screen.blit(rendu, ((x+largeur//2)-100, y+hauteur//2))
-
+    
 def placer_mob(grille):
     #place des mobs aleatoirement dans la grille de jeu principale
     #le nombre de mob varie selon la difficulté et la vague en cours
 
-    difficulter = 0
-    
+    if parametres.facile_clicked == False or parametres.moyen_clicked == False or parametres.difficile_clicked == False:
+        difficulter = parametres.difficulter_defaut
     if parametres.facile_clicked == True :
         difficulter = 3
     if parametres.moyen_clicked == True : 
@@ -197,3 +197,12 @@ def draw_health_bar(screen, x, y, current, maximum, width=200, height=18, label=
     font = pygame.font.SysFont(None, 24)
     texte = font.render(f"{label}{current}/{maximum}", True, parametres.NOIR)
     screen.blit(texte, (x + width + 8, y))
+    
+def refill(grille):
+    # replace des mobs et objets dans la grille si elle est vide
+    mobs = 0
+    for cell in grille.values():
+        if isinstance(cell.contenu,entities.Mob):
+            mobs +=1
+    if mobs == 0:
+        placer_mob(grille)

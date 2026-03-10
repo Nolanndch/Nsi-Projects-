@@ -32,7 +32,7 @@ delai_combat = 800
 facile_clicked = False
 moyen_clicked = False
 difficile_clicked = False
-
+difficulter_defaut = 3
 #Couleurs :
 
 NOIR = (0, 0, 0)
