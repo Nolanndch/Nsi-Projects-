@@ -34,7 +34,7 @@ class Mob():   #classe des enemis
         self.life = 50
         self.max_life = 50
         self.power = 10
-        self.soin_restant = 1
+        self.soin_restant = 3
         self.couleur = parametres.ROUGE_FONCE
     
     def attaquer(self, player):

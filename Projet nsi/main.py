@@ -75,8 +75,7 @@ while loop :
 
     if parametres.etat_du_jeu == "play":
         UI.play(screen,grille_jeu,entities.j1)
-        fonction.wave(grille_jeu)
-
+        
         clock.tick(60)  # limite à 60 FPS
 
         temps_actuel = pygame.time.get_ticks()
@@ -125,6 +124,7 @@ while loop :
         #déroulement du combat coté enemi
 
         if entities.ennemi_en_combat.life <= 0 :#mort de l'enemi
+            fonction.refill(grille_jeu)
             grille_jeu[entities.ennemi_en_combat.x, entities.ennemi_en_combat.y].contenu = None
             entities.ennemi_en_combat = None
             parametres.etat_du_jeu = 'play'
@@ -136,17 +136,14 @@ while loop :
             
                 if entities.ennemi_en_combat.life<=10 :  #l'enemi se soigne si life<10
                     entities.ennemi_en_combat.se_soigner()
-                    parametres.tour_de = 'Joueur'
-                    #mort du joueur
-                    if entities.j1.life <= 1 :
-                        parametres.etat_du_jeu = "mort"
 
-                else :   #l'enemi attaque 
-                    entities.ennemi_en_combat.attaquer(entities.j1)
-                    parametres.tour_de = 'Joueur'
-                    #mort du joueur
-                    if entities.j1.life <= 1 :
-                        parametres.etat_du_jeu = "mort"
+                #l'enemi attaque 
+                entities.ennemi_en_combat.attaquer(entities.j1)
+                parametres.tour_de = 'Joueur'
+
+                #mort du joueur
+                if entities.j1.life <= 1 :
+                    parametres.etat_du_jeu = "mort"
 
     if parametres.etat_du_jeu == "mort":
         UI.mort(screen)
