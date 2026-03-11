@@ -42,19 +42,13 @@ while loop :
                 #gestion des click de selection de la difficulté
                 
                 if bouton.facile_bt.collidepoint(pygame.mouse.get_pos()):
-                    parametres.facile_clicked = True
-                    parametres.moyen_clicked = False
-                    parametres.difficile_clicked = False
-                    #gougougzga
+                    fonction.change_dificulty("facile",grille_jeu)
+                    
                 if bouton.moyen_bt.collidepoint(pygame.mouse.get_pos()):
-                    parametres.moyen_clicked = True
-                    parametres.facile_clicked = False
-                    parametres.difficile_clicked = False
-                   
+                    fonction.change_dificulty("moyen",grille_jeu)
+                    
                 if bouton.difficile_bt.collidepoint(pygame.mouse.get_pos()):
-                    parametres.difficile_clicked = True
-                    parametres.facile_clicked = False
-                    parametres.moyen_clicked = False
+                    fonction.change_dificulty("difficile",grille_jeu)
                     
             if parametres.etat_du_jeu == 'combat': #deroulement du combat coté joueur
 

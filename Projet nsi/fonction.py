@@ -184,3 +184,24 @@ def draw_health_bar(screen, x, y, current, maximum, width=200, height=18, label=
     font = pygame.font.SysFont(None, 24)
     texte = font.render(f"{label}{current}/{maximum}", True, parametres.NOIR)
     screen.blit(texte, (x + width + 8, y))
+    
+def change_dificulty(dificulty,grille):
+    
+    if dificulty == "facile":
+        parametres.facile_clicked = True
+        parametres.moyen_clicked = False
+        parametres.difficile_clicked = False
+        
+        
+    if dificulty == "moyen":
+        parametres.moyen_clicked = True
+        parametres.facile_clicked = False
+        parametres.difficile_clicked = False
+        
+    if dificulty == "difficile":
+        parametres.difficile_clicked = True
+        parametres.facile_clicked = False
+        parametres.moyen_clicked = False
+    
+    
+    reset_grille(grille)
