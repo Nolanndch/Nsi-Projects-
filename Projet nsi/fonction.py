@@ -64,7 +64,7 @@ def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
     rendu = taille.render(texte, True, couleur)
     screen.blit(rendu, ((x+largeur//2)-100, y+hauteur//2))
     
-def placer_mob(grille):
+def contenue_grille(grille):
     #place des mobs aleatoirement dans la grille de jeu principale
     #le nombre de mob varie selon la difficulté et la vague en cours
 
@@ -72,10 +72,13 @@ def placer_mob(grille):
         difficulter = parametres.difficulter_defaut
     if parametres.facile_clicked == True :
         difficulter = 3
+        parametres.nb_item_defaut = 5
     if parametres.moyen_clicked == True : 
         difficulter = 6
+        parametres.nb_item_defaut = 4
     if parametres.difficile_clicked == True:
         difficulter = 9
+        parametres.nb_item_defaut = 3
     
     nb_enemie = parametres.wave_number * difficulter
     
@@ -86,14 +89,13 @@ def placer_mob(grille):
         if grille[x,y].contenu == None:
             grille[x,y].contenu = entities.Mob(x,y)
             
-# pour faire spawn les objet    
-#def nb_objet(grille):
-#   for i in range(2):
-#       x = random.randint(0, parametres.taille_grille - 1)
-#       y = random.randint(0, parametres.taille_grille - 1)
-#
-#       if grille[x,y].contenu == None:
-#            grille[x,y].contenu = entities.Objet(x,y)
+            
+    for i in range(parametres.nb_item_defaut):
+        x = random.randint(0, parametres.taille_grille - 1)
+        y = random.randint(0, parametres.taille_grille - 1)
+
+        if grille[x,y].contenu == None:
+            grille[x,y].contenu = entities.soin
 
 
 def tour():
@@ -145,7 +147,7 @@ def reset_grille(grille):
     for cell in grille.values():
         cell.contenu = None
     
-    placer_mob(grille)
+    contenue_grille(grille)
     
 def draw_health_bar(screen, x, y, current, maximum, width=200, height=18, label="", color_override=None):
     ratio = max(current / maximum, 0)
@@ -196,4 +198,10 @@ def refill(grille):
         if isinstance(cell.contenu,entities.Mob):
             mobs +=1
     if mobs == 0:
-        placer_mob(grille)
+        contenue_grille(grille)
+        
+def recompense(grille):
+    x = entities.ennemi_en_combat.x
+    y = entities.ennemi_en_combat.y
+    coord = (x+1,y)
+    grille[coord].contenu = entities.Objet("soin", 10, 0, 0)

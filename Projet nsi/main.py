@@ -7,7 +7,7 @@ import entities
 from fonction import player_can_move
 screen = parametres.ecran
 grille_jeu = fonction.creer_grille(parametres.taille_grille)
-fonction.placer_mob(grille_jeu)
+fonction.contenue_grille(grille_jeu)
 fonction.tour()
 
 clock = pygame.time.Clock()

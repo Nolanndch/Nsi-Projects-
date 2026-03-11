@@ -33,6 +33,7 @@ facile_clicked = False
 moyen_clicked = False
 difficile_clicked = False
 difficulter_defaut = 3
+nb_item_defaut = 5
 #Couleurs :
 
 NOIR = (0, 0, 0)

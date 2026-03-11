@@ -50,24 +50,27 @@ class Mob():   #classe des enemis
 
 ennemi_en_combat = None
 
-'''''
-Pas encore finie
 class Objet():
     def __init__(self,name, pv, degat, protection):
         self.name = name
         self.pv = pv
         self.degat = degat
         self.protection = protection
+        self.couleur = parametres.VERT_FONCE
     
     def nom_objet(self):
         return self.name
     
     def nb_degat(self):
-        Player.power += self.nb_degat 
+        j1.power += self.nb_degat 
 
     def pv(self):
-        Player.life += self.pv
+        j1.life += self.pv
     
     def protection(self):
-        Player.life += 
-'''
+        j1.armor += self.protection
+        
+soin = Objet("soin", 10, 0, 0)
+épée = Objet("épée", 0, 5, 0)
+armure = Objet("plastron", 0, 0, 5)   
+
