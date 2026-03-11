@@ -201,7 +201,9 @@ def refill(grille):
         contenue_grille(grille)
         
 def recompense(grille):
-    x = entities.ennemi_en_combat.x
-    y = entities.ennemi_en_combat.y
-    coord = (x+1,y)
-    grille[coord].contenu = entities.Objet("soin", 10, 0, 0)
+    if entities.ennemi_en_combat.life <= 0 :
+        x = entities.ennemi_en_combat.x
+        y = entities.ennemi_en_combat.y
+        coord = (x+1,y)
+        if coord in grille and grille[coord].contenu == None:
+            grille[coord].contenu = random.choice([entities.soin, entities.armure])

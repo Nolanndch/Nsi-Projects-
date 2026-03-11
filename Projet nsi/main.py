@@ -132,10 +132,14 @@ while loop :
                 #l'enemi attaque 
                 entities.ennemi_en_combat.attaquer(entities.j1)
                 parametres.tour_de = 'Joueur'
-
+                
                 #mort du joueur
                 if entities.j1.life <= 1 :
                     parametres.etat_du_jeu = "mort"
+                    
+                if entities.ennemi_en_combat.life <= 0 :
+                    fonction.recompense(grille_jeu)
+                    parametres.etat_du_jeu = "play"
 
     if parametres.etat_du_jeu == "mort":
         UI.mort(screen)
