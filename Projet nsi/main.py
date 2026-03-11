@@ -78,28 +78,28 @@ while loop :
             # DROITE
             if keys[pygame.K_RIGHT]:
                 if player_can_move("droite"):
-                    entities.j1.x += 1
+                    entities.j1.se_deplacer("droite")
                     parametres.dernier_mouvement = temps_actuel
                     fonction.player_rencontre_mob(grille_jeu)
 
             # GAUCHE
             elif keys[pygame.K_LEFT]:
                 if player_can_move("gauche"):
-                    entities.j1.x -= 1
+                    entities.j1.se_deplacer("gauche")
                     parametres.dernier_mouvement = temps_actuel
                     fonction.player_rencontre_mob(grille_jeu)
 
             # HAUT
             elif keys[pygame.K_UP]:
                 if player_can_move("haut"):
-                    entities.j1.y -= 1
+                    entities.j1.se_deplacer("haut")
                     parametres.dernier_mouvement = temps_actuel
                     fonction.player_rencontre_mob(grille_jeu)
 
             # BAS
             elif keys[pygame.K_DOWN]:
                 if player_can_move("bas"):
-                    entities.j1.y += 1
+                    entities.j1.se_deplacer("bas")
                     parametres.dernier_mouvement = temps_actuel
                     fonction.player_rencontre_mob(grille_jeu)
 
@@ -117,6 +117,7 @@ while loop :
 
         if entities.ennemi_en_combat.life <= 0 :#mort de l'enemi
             fonction.refill(grille_jeu)
+            fonction.recompense(grille_jeu)
             grille_jeu[entities.ennemi_en_combat.x, entities.ennemi_en_combat.y].contenu = None
             entities.ennemi_en_combat = None
             parametres.etat_du_jeu = 'play'
@@ -136,10 +137,6 @@ while loop :
                 #mort du joueur
                 if entities.j1.life <= 1 :
                     parametres.etat_du_jeu = "mort"
-                    
-                if entities.ennemi_en_combat.life <= 0 :
-                    fonction.recompense(grille_jeu)
-                    parametres.etat_du_jeu = "play"
 
     if parametres.etat_du_jeu == "mort":
         UI.mort(screen)
