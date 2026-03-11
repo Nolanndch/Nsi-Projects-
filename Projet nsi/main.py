@@ -45,7 +45,7 @@ while loop :
                     parametres.facile_clicked = True
                     parametres.moyen_clicked = False
                     parametres.difficile_clicked = False
-                    
+                    #gougougzga
                 if bouton.moyen_bt.collidepoint(pygame.mouse.get_pos()):
                     parametres.moyen_clicked = True
                     parametres.facile_clicked = False
