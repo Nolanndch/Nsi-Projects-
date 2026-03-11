@@ -188,3 +188,12 @@ def change_dificulty(dificulty,grille):
     
     
     reset_grille(grille)
+    
+def refill(grille):
+    # replace des mobs et objets dans la grille si elle est vide
+    mobs = 0
+    for cell in grille.values():
+        if isinstance(cell.contenu,entities.Mob):
+            mobs +=1
+    if mobs == 0:
+        placer_mob(grille)
