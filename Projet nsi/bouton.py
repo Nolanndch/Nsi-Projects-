@@ -16,21 +16,21 @@ exit_txt = "exit"
 
 #boutons du mode de combat :
 
-attaquer_bt = pygame.Rect(xbouton,ybouton,largeur_bouton,hauteur_bouton, border_radius = 1000)
+attaquer_bt = pygame.Rect(xbouton,ybouton,largeur_bouton,hauteur_bouton)
 attaquer_txt = "Attaquer"
 
-soin_bt = pygame.Rect(xbouton,ybouton + 70,largeur_bouton,hauteur_bouton, border_radius = 1000)
+soin_bt = pygame.Rect(xbouton,ybouton + 70,largeur_bouton,hauteur_bouton)
 soin_txt = "Soigner"
 
 #boutons du menu de parametre :
 
-facile_bt = pygame.Rect(xbouton-500,ybouton,largeur_bouton,hauteur_bouton, border_radius = 1000)
+facile_bt = pygame.Rect(xbouton-500,ybouton,largeur_bouton,hauteur_bouton)
 facile_txt = "Facile"
 
 
-moyen_bt = pygame.Rect(xbouton-500,ybouton + 70,largeur_bouton,hauteur_bouton, border_radius = 1000)
+moyen_bt = pygame.Rect(xbouton-500,ybouton + 70,largeur_bouton,hauteur_bouton)
 moyen_txt = "Moyen"
 
 
-difficile_bt = pygame.Rect(xbouton-500,ybouton + 140,largeur_bouton,hauteur_bouton, border_radius = 1000)
+difficile_bt = pygame.Rect(xbouton-500,ybouton + 140,largeur_bouton,hauteur_bouton)
 difficile_txt = "Difficile"

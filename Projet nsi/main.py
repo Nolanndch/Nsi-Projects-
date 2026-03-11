@@ -62,8 +62,6 @@ while loop :
                     if bouton.soin_bt.collidepoint(pygame.mouse.get_pos()):
                         entities.j1.soigner(5)
 
-                    
-
     if parametres.etat_du_jeu == "menu" :
         UI.menu(screen)
 

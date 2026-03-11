@@ -10,7 +10,7 @@ screen = parametres.ecran
 def menu(screen):
     screen.fill(parametres.BLEU)
 
-    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.Jouer_bt)
+    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.Jouer_bt,border_radius=4)
     fonction.afficher_texte(
         bouton.Jouer_txt,
         xbouton, ybouton - 70,
@@ -19,7 +19,7 @@ def menu(screen):
         parametres.taille_text
     )
 
-    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.parametre_bt)
+    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.parametre_bt,border_radius=4)
     fonction.afficher_texte(
         bouton.parametre_txt,
         xbouton + 40, ybouton,
@@ -27,7 +27,7 @@ def menu(screen):
         parametres.NOIR,
         parametres.taille_text
     )
-    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.rules_bt)
+    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.rules_bt,border_radius=4)
     fonction.afficher_texte(
         bouton.rules_txt,
         xbouton + 40, ybouton + 70,

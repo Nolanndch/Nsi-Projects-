@@ -56,23 +56,6 @@ def afficher_joueur(screen, joueur):
 
     pygame.draw.rect(screen, joueur.couleur, rect)
 
-def afficher_mob(screen, mob):
-    #affiche les mobs dans la grille principale
-    largeur_grille = parametres.taille_grille * taille_cell
-    hauteur_grille = parametres.taille_grille * taille_cell
-
-    offset_x = (screen.get_width() - largeur_grille) // 2
-    offset_y = (screen.get_height() - hauteur_grille) // 2
-
-    rect = pygame.Rect(
-        offset_x + mob.x * taille_cell,
-        offset_y + mob.y * taille_cell,
-        taille_cell,
-        taille_cell
-    )
-
-    pygame.draw.rect(screen, mob.couleur, rect)
-
 def afficher_texte(texte, x, y,largeur,hauteur,couleur,taille):
 
     if isinstance(texte,list):
