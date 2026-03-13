@@ -36,7 +36,7 @@ def afficher_grille(screen, dico):
             taille_cell
         )
 
-        pygame.draw.rect(screen, parametres.BLEU_CLAIR, rect)
+        pygame.draw.rect(screen,parametres.BLEU_CLAIR, rect)
         pygame.draw.rect(screen, parametres.NOIR, rect, 1)
 
 def afficher_joueur(screen, joueur):
@@ -132,7 +132,9 @@ def player_rencontre(grille):
 
     elif isinstance(contenu,entities.Objet):
         if contenu == entities.armure :
-            pass
+            contenu.proteger()
+            grille[entities.j1.x,entities.j1.y].contenu = None
+
         elif contenu == entities.soin :
             entities.j1.inventaire.append(contenu)
             grille[entities.j1.x,entities.j1.y].contenu = None
@@ -240,6 +242,8 @@ def bouger_mob(grille):
             grille[enemi.x, enemi.y].contenu = None
             # déplace d'une case
             enemi.se_deplacer(grille)
+            #verifie si le mob est sur le joueur
+            player_rencontre(grille)
             # place dans la nouvelle case
             grille[enemi.x, enemi.y].contenu = enemi
             # réduit le nombre de pas restants

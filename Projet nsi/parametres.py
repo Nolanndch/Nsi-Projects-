@@ -23,6 +23,7 @@ deplacement_joueur_max = 6
 deplacement_mob_max = 4
 nb_deplacement = 0
 
+niveau_joueur = 0
 
 xmin = 0
 xmax = taille_grille - 1

@@ -46,7 +46,7 @@ def menu(screen):
 
 # UI PLay
 def play(screen,grille_jeu,joueur):
-    screen.fill(parametres.VERT)
+    screen.fill(parametres.BLEU)
     fonction.afficher_grille(screen,grille_jeu)
     fonction.afficher_joueur(screen,joueur)
 
@@ -73,6 +73,14 @@ def play(screen,grille_jeu,joueur):
         parametres.NOIR,
         parametres.taille_text
     )
+    fonction.afficher_texte(
+        f"exp : {entities.j1.xp}, niveau :{parametres.niveau_joueur}",
+        xbouton +500, ybouton -422,
+        largeur_bouton, hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text
+    )
+    
     
     
 #UI Parametre
@@ -131,6 +139,7 @@ def rules(screen):
         parametres.NOIR,
         parametres.taille_text
     )
+
     
 #UI Combat
 def combat(screen):

@@ -4,6 +4,7 @@ import bouton
 import UI
 import fonction
 import entities
+import random
 from fonction import player_can_move
 screen = parametres.ecran
 grille_jeu = fonction.creer_grille(parametres.taille_grille)
@@ -130,6 +131,8 @@ while loop :
             fonction.refill(grille_jeu)
             fonction.recompense(grille_jeu)
             grille_jeu[entities.ennemi_en_combat.x, entities.ennemi_en_combat.y].contenu = None
+            entities.j1.xp += random.randint(5,10)
+            parametres.niveau_joueur = entities.j1.xp//10
             entities.ennemi_en_combat = None
             parametres.etat_du_jeu = 'play'
         

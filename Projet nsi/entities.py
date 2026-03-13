@@ -4,14 +4,15 @@ class Player():  #classe des joueurs
     def __init__(self,x,y):
         self.x = x
         self.y = y
-        self.life = 50
-        self.max_life = 50
+        self.life = 100
+        self.max_life = 100
         self.armor = 0
-        self.max_armor = 20
-        self.power = 10
-        self.couleur = parametres.BLEU_FONCE
+        self.max_armor = 50
+        self.power = 45
+        self.couleur = parametres.NOIR
         self.inventaire = []
         self.nb_deplacement = 0
+        self.xp = 0
 
 
     def attaquer(self, mob):
@@ -104,12 +105,12 @@ class Objet():
     def nb_degat(self):
         j1.power += self.nb_degat 
 
-    def pv(self):
+    def regen(self):
         j1.life += self.pv
     
-    def protection(self):
+    def proteger(self):
         j1.armor += self.protection
         
 soin = Objet("soin", 2, 0, 0,parametres.VERT_FONCE)
 épée = Objet("épée", 0, 5, 0,parametres.GRIS_FONCE)
-armure = Objet("plastron", 0, 0, 5,parametres.BLEU_FONCE)
+armure = Objet("plastron", 0, 0, 10,parametres.BLEU_FONCE)
