@@ -75,33 +75,44 @@ while loop :
 
         if temps_actuel - parametres.dernier_mouvement > parametres.delai_mouvement:
 
-            # DROITE
-            if keys[pygame.K_RIGHT]:
-                if player_can_move("droite"):
-                    entities.j1.se_deplacer("droite")
-                    parametres.dernier_mouvement = temps_actuel
-                    fonction.player_rencontre_mob(grille_jeu)
+            if parametres.tour_deplacement == "mob":
 
-            # GAUCHE
-            elif keys[pygame.K_LEFT]:
-                if player_can_move("gauche"):
-                    entities.j1.se_deplacer("gauche")
-                    parametres.dernier_mouvement = temps_actuel
-                    fonction.player_rencontre_mob(grille_jeu)
+                fonction.bouger_mob(grille_jeu)
 
-            # HAUT
-            elif keys[pygame.K_UP]:
-                if player_can_move("haut"):
-                    entities.j1.se_deplacer("haut")
-                    parametres.dernier_mouvement = temps_actuel
-                    fonction.player_rencontre_mob(grille_jeu)
+            elif parametres.tour_deplacement == "joueur":
 
-            # BAS
-            elif keys[pygame.K_DOWN]:
-                if player_can_move("bas"):
-                    entities.j1.se_deplacer("bas")
-                    parametres.dernier_mouvement = temps_actuel
-                    fonction.player_rencontre_mob(grille_jeu)
+                if entities.j1.nb_deplacement <= parametres.deplacement_joueur_max :
+                    
+                    # DROITE
+                    if keys[pygame.K_RIGHT]:
+                        if player_can_move("droite"):
+                            entities.j1.se_deplacer("droite")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre_mob(grille_jeu)
+
+                    # GAUCHE
+                    elif keys[pygame.K_LEFT]:
+                        if player_can_move("gauche"):
+                            entities.j1.se_deplacer("gauche")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre_mob(grille_jeu)
+
+                    # HAUT
+                    elif keys[pygame.K_UP]:
+                        if player_can_move("haut"):
+                            entities.j1.se_deplacer("haut")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre_mob(grille_jeu)
+
+                    # BAS
+                    elif keys[pygame.K_DOWN]:
+                        if player_can_move("bas"):
+                            entities.j1.se_deplacer("bas")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre_mob(grille_jeu)
+                else :
+                    parametres.tour_deplacement = "mob"
+                    entities.j1.nb_deplacement = 0
 
 
     if parametres.etat_du_jeu == 'parametre':

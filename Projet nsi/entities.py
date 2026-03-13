@@ -11,6 +11,7 @@ class Player():  #classe des joueurs
         self.power = 100
         self.couleur = parametres.BLEU_FONCE
         self.inventaire = [1,1,1,1]
+        self.nb_deplacement = 0
 
 
     def attaquer(self, mob):
@@ -33,6 +34,8 @@ class Player():  #classe des joueurs
             self.y-=1
         elif direction == 'bas':
             self.y+=1
+
+        self.nb_deplacement+=1
         
 
 j1 = Player(5, 6)
@@ -41,10 +44,12 @@ class Mob():   #classe des enemis
     def __init__(self,x,y):
         self.x = x
         self.y = y
+        self.coord = x,y
         self.life = 50
         self.max_life = 50
         self.power = 10
         self.soin_restant = 3
+        self.nb_deplacement = 0
         self.couleur = parametres.ROUGE_FONCE
     
     def attaquer(self, player):
@@ -59,8 +64,19 @@ class Mob():   #classe des enemis
             self.soin_restant-=1
 
     def se_deplacer(self):
-        pass
-        #pattern a* a implenter pour que les mobs se deplacent vers le joueur
+
+        if j1.x > self.x :
+            self.x+=1
+        if j1.x < self.x :
+            self.x-= 1
+        if j1.y > self.y :
+            self.y+=1
+        if j1.y < self.y :
+            self.y-= 1
+
+        self.nb_deplacement+=1
+        print("mob",self.x,self.y)
+            
 
 ennemi_en_combat = None
 

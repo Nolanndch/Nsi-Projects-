@@ -207,3 +207,23 @@ def recompense(grille):
         coord = (x+1,y)
         if coord in grille and grille[coord].contenu == None:
             grille[coord].contenu = random.choice([entities.soin, entities.armure])
+
+
+def bouger_mob(grille):
+
+    mobs_a_bouger = []
+
+    for cell in grille.values():
+        if isinstance(cell.contenu,entities.Mob):
+            mobs_a_bouger.append(cell.contenu)
+
+    for enemi in mobs_a_bouger :
+        enemi.nb_deplacement = 0
+
+        while enemi.nb_deplacement < parametres.deplacement_mob_max :
+            grille[enemi.x,enemi.y].contenu = None
+            enemi.se_deplacer()
+            grille[enemi.x,enemi.y].contenu = enemi
+
+    parametres.tour_deplacement = "joueur"
+        

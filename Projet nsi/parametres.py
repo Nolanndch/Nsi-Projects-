@@ -17,7 +17,12 @@ taille_grille = 40
 etat_du_jeu = "menu"
 wave_number = 1
 tour_de = None
-taille_inventaire = 5
+
+tour_deplacement = "joueur"
+deplacement_joueur_max = 5
+deplacement_mob_max = 5
+nb_deplacement = 0
+
 
 xmin = 0
 xmax = taille_grille - 1
@@ -34,6 +39,7 @@ moyen_clicked = False
 difficile_clicked = False
 difficulter_defaut = 3
 nb_item_defaut = 5
+
 #Couleurs :
 
 NOIR = (0, 0, 0)
