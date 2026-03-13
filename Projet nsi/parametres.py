@@ -20,7 +20,7 @@ tour_de = None
 
 tour_deplacement = "joueur"
 deplacement_joueur_max = 5
-deplacement_mob_max = 5
+deplacement_mob_max = 4
 nb_deplacement = 0
 
 
@@ -30,7 +30,11 @@ ymin = 0
 ymax = taille_grille - 1
 
 dernier_mouvement = 0
-delai_mouvement = 100
+dernier_mouvement_mob = 0
+delai_mouvement_mob = 1000
+mobs_pas_restants = {}
+
+delai_mouvement = 150
 dernier_changement = 0
 delai_combat = 800
 

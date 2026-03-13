@@ -63,15 +63,15 @@ class Mob():   #classe des enemis
             self.life += 5 
             self.soin_restant-=1
 
-    def se_deplacer(self):
+    def se_deplacer(self,grille):
 
-        if j1.x > self.x :
+        if j1.x > self.x and grille[self.x+1,self.y].contenu == None :
             self.x+=1
-        if j1.x < self.x :
+        if j1.x < self.x and grille[self.x-1,self.y].contenu == None  :
             self.x-= 1
-        if j1.y > self.y :
+        if j1.y > self.y and grille[self.x,self.y+1].contenu == None  :
             self.y+=1
-        if j1.y < self.y :
+        if j1.y < self.y and grille[self.x,self.y-1].contenu == None  :
             self.y-= 1
 
         self.nb_deplacement+=1

@@ -73,13 +73,13 @@ while loop :
         temps_actuel = pygame.time.get_ticks()
         keys = pygame.key.get_pressed()
 
-        if temps_actuel - parametres.dernier_mouvement > parametres.delai_mouvement:
+        if parametres.tour_deplacement == "mob": #déplacements des mobs
 
-            if parametres.tour_deplacement == "mob":
+            fonction.bouger_mob(grille_jeu)
 
-                fonction.bouger_mob(grille_jeu)
+        if parametres.tour_deplacement == "joueur":
 
-            elif parametres.tour_deplacement == "joueur":
+            if temps_actuel - parametres.dernier_mouvement > parametres.delai_mouvement:#delai mouvement du joueur
 
                 if entities.j1.nb_deplacement <= parametres.deplacement_joueur_max :
                     

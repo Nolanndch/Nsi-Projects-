@@ -210,20 +210,38 @@ def recompense(grille):
 
 
 def bouger_mob(grille):
+    import pygame
+    temps_actuel = pygame.time.get_ticks()
 
-    mobs_a_bouger = []
+    # Pas encore le moment de bouger
+    if temps_actuel - parametres.dernier_mouvement_mob < parametres.delai_mouvement_mob:
+        return
 
-    for cell in grille.values():
-        if isinstance(cell.contenu,entities.Mob):
-            mobs_a_bouger.append(cell.contenu)
+    # On récupère tous les mobs
+    mobs_a_bouger = [cell.contenu for cell in grille.values() if isinstance(cell.contenu, entities.Mob)]
 
-    for enemi in mobs_a_bouger :
-        enemi.nb_deplacement = 0
+    for enemi in mobs_a_bouger:
 
-        while enemi.nb_deplacement < parametres.deplacement_mob_max :
-            grille[enemi.x,enemi.y].contenu = None
-            enemi.se_deplacer()
-            grille[enemi.x,enemi.y].contenu = enemi
+        # Si c'est le début du tour, on initialise le compteur de pas
+        if enemi not in parametres.mobs_pas_restants:
+            parametres.mobs_pas_restants[enemi] = parametres.deplacement_mob_max
 
-    parametres.tour_deplacement = "joueur"
+        # S'il reste des pas à faire
+        if parametres.mobs_pas_restants[enemi] > 0:
+            # enlève de l'ancienne case
+            grille[enemi.x, enemi.y].contenu = None
+            # déplace d'une case
+            enemi.se_deplacer(grille)
+            # place dans la nouvelle case
+            grille[enemi.x, enemi.y].contenu = enemi
+            # réduit le nombre de pas restants
+            parametres.mobs_pas_restants[enemi] -= 1
+
+    # Update du timer
+    parametres.dernier_mouvement_mob = temps_actuel
+
+    # Si tous les mobs ont fini leurs pas, reset pour le prochain tour et passe au joueur
+    if all(p == 0 for p in parametres.mobs_pas_restants.values()):
+        parametres.mobs_pas_restants.clear()
+        parametres.tour_deplacement = "joueur"
         
