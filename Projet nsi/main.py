@@ -88,28 +88,28 @@ while loop :
                         if player_can_move("droite"):
                             entities.j1.se_deplacer("droite")
                             parametres.dernier_mouvement = temps_actuel
-                            fonction.player_rencontre_mob(grille_jeu)
+                            fonction.player_rencontre(grille_jeu)
 
                     # GAUCHE
                     elif keys[pygame.K_LEFT]:
                         if player_can_move("gauche"):
                             entities.j1.se_deplacer("gauche")
                             parametres.dernier_mouvement = temps_actuel
-                            fonction.player_rencontre_mob(grille_jeu)
+                            fonction.player_rencontre(grille_jeu)
 
                     # HAUT
                     elif keys[pygame.K_UP]:
                         if player_can_move("haut"):
                             entities.j1.se_deplacer("haut")
                             parametres.dernier_mouvement = temps_actuel
-                            fonction.player_rencontre_mob(grille_jeu)
+                            fonction.player_rencontre(grille_jeu)
 
                     # BAS
                     elif keys[pygame.K_DOWN]:
                         if player_can_move("bas"):
                             entities.j1.se_deplacer("bas")
                             parametres.dernier_mouvement = temps_actuel
-                            fonction.player_rencontre_mob(grille_jeu)
+                            fonction.player_rencontre(grille_jeu)
                 else :
                     parametres.tour_deplacement = "mob"
                     entities.j1.nb_deplacement = 0

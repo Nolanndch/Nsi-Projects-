@@ -19,7 +19,7 @@ wave_number = 1
 tour_de = None
 
 tour_deplacement = "joueur"
-deplacement_joueur_max = 5
+deplacement_joueur_max = 6
 deplacement_mob_max = 4
 nb_deplacement = 0
 

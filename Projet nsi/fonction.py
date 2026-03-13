@@ -122,13 +122,21 @@ def player_can_move(direction):
     if direction == "droite":
         return entities.j1.x + 1 < parametres.xmax + 1
 
-def player_rencontre_mob(grille):
-    #verifie si le joueur se trouve sur la meme case qu'un mob
+def player_rencontre(grille):
+    #verifie si le joueur se trouve sur la meme case qu'un mob ou un objet
     contenu = grille[entities.j1.x,entities.j1.y].contenu
 
     if isinstance(contenu,entities.Mob):
         parametres.etat_du_jeu = "combat"
         entities.ennemi_en_combat = grille[entities.j1.x,entities.j1.y].contenu
+
+    elif isinstance(contenu,entities.Objet):
+        if contenu == entities.armure :
+            pass
+        elif contenu == entities.soin :
+            entities.j1.inventaire.append(contenu)
+            grille[entities.j1.x,entities.j1.y].contenu = None
+
 
 def etat_precedent(loop):
     #reviens a l'etat de jeu inferieur a celui actuel
@@ -244,4 +252,3 @@ def bouger_mob(grille):
     if all(p == 0 for p in parametres.mobs_pas_restants.values()):
         parametres.mobs_pas_restants.clear()
         parametres.tour_deplacement = "joueur"
-        

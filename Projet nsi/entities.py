@@ -6,11 +6,11 @@ class Player():  #classe des joueurs
         self.y = y
         self.life = 50
         self.max_life = 50
-        self.armor = 20
+        self.armor = 0
         self.max_armor = 20
-        self.power = 100
+        self.power = 10
         self.couleur = parametres.BLEU_FONCE
-        self.inventaire = [1,1,1,1]
+        self.inventaire = []
         self.nb_deplacement = 0
 
 
@@ -18,9 +18,10 @@ class Player():  #classe des joueurs
         mob.life -= self.power
 
     def soigner(self,pv):
-        if self.life + pv <= self.max_life and 1 in self.inventaire :
-            self.life += pv
-            self.inventaire.remove(1)
+        if self.life + soin.pv <= self.max_life and soin in self.inventaire :
+            self.life += soin.pv
+            self.inventaire.pop()
+            
     
     def proteger(self,pv):
         self.life += pv
@@ -73,6 +74,15 @@ class Mob():   #classe des enemis
             self.y+=1
         if j1.y < self.y and grille[self.x,self.y-1].contenu == None  :
             self.y-= 1
+        else :
+            if not grille[self.x+1,self.y].contenu == None :
+                self.x-=1
+            if not grille[self.x-1,self.y].contenu == None :
+                self.x+=1
+            if not grille[self.x,self.y+1].contenu == None :
+                self.x+=1
+            if not grille[self.x-1,self.y].contenu == None :
+                self.x+=1
 
         self.nb_deplacement+=1
         print("mob",self.x,self.y)
@@ -81,12 +91,12 @@ class Mob():   #classe des enemis
 ennemi_en_combat = None
 
 class Objet():
-    def __init__(self,name, pv, degat, protection):
+    def __init__(self,name, pv, degat, protection,couleur):
         self.name = name
         self.pv = pv
         self.degat = degat
         self.protection = protection
-        self.couleur = parametres.VERT_FONCE
+        self.couleur = couleur
     
     def nom_objet(self):
         return self.name
@@ -100,7 +110,6 @@ class Objet():
     def protection(self):
         j1.armor += self.protection
         
-soin = Objet("soin", 10, 0, 0)
-épée = Objet("épée", 0, 5, 0)
-armure = Objet("plastron", 0, 0, 5)   
-
+soin = Objet("soin", 2, 0, 0,parametres.VERT_FONCE)
+épée = Objet("épée", 0, 5, 0,parametres.GRIS_FONCE)
+armure = Objet("plastron", 0, 0, 5,parametres.BLEU_FONCE)
