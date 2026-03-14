@@ -4,8 +4,8 @@ import bouton
 import UI
 import fonction
 import entities
-import random
 from fonction import player_can_move
+
 screen = parametres.ecran
 grille_jeu = fonction.creer_grille(parametres.taille_grille)
 fonction.contenue_grille(grille_jeu)
@@ -14,76 +14,81 @@ fonction.tour()
 clock = pygame.time.Clock()
 
 loop = True
-while loop :
+while loop:
     for event in pygame.event.get():
 
-        if event.type == pygame.KEYDOWN :#les verifs des click clavier
+        if event.type == pygame.KEYDOWN:  # les verifs des click clavier
 
             if event.key == pygame.K_ESCAPE:
                 fonction.etat_precedent(loop)
-                
+
             if event.key == pygame.K_e:
                 loop = False
 
-        if event.type == pygame.MOUSEBUTTONDOWN: #les verifs des boutons
+        if event.type == pygame.MOUSEBUTTONDOWN:  # les verifs des boutons
 
             if bouton.exit_bt.collidepoint(pygame.mouse.get_pos()):
                 fonction.etat_precedent(loop)
 
-            if parametres.etat_du_jeu == 'menu':
+            if parametres.etat_du_jeu == "menu":
                 if bouton.Jouer_bt.collidepoint(pygame.mouse.get_pos()):
-                    parametres.etat_du_jeu = 'play'
+                    parametres.etat_du_jeu = "play"
                 if bouton.parametre_bt.collidepoint(pygame.mouse.get_pos()):
-                    parametres.etat_du_jeu = 'parametre'
+                    parametres.etat_du_jeu = "parametre"
                 if bouton.rules_bt.collidepoint(pygame.mouse.get_pos()):
-                    parametres.etat_du_jeu = 'rules' 
-                
+                    parametres.etat_du_jeu = "rules"
+
             if parametres.etat_du_jeu == "parametre":
 
-                #gestion des click de selection de la difficulté
-                
-                if bouton.facile_bt.collidepoint(pygame.mouse.get_pos()):
-                    fonction.change_dificulty("facile",grille_jeu)
-                    
-                if bouton.moyen_bt.collidepoint(pygame.mouse.get_pos()):
-                    fonction.change_dificulty("moyen",grille_jeu)
-                    
-                if bouton.difficile_bt.collidepoint(pygame.mouse.get_pos()):
-                    fonction.change_dificulty("difficile",grille_jeu)
-                    
-            if parametres.etat_du_jeu == 'combat': #deroulement du combat coté joueur
+                # gestion des click de selection de la difficulté
 
-                if entities.ennemi_en_combat != None and parametres.tour_de == "Joueur" : #verfifie le tour du joueur 
-                    
+                if bouton.facile_bt.collidepoint(pygame.mouse.get_pos()):
+                    fonction.change_dificulty("facile", grille_jeu)
+
+                if bouton.moyen_bt.collidepoint(pygame.mouse.get_pos()):
+                    fonction.change_dificulty("moyen", grille_jeu)
+
+                if bouton.difficile_bt.collidepoint(pygame.mouse.get_pos()):
+                    fonction.change_dificulty("difficile", grille_jeu)
+
+            if parametres.etat_du_jeu == "combat":  # deroulement du combat coté joueur
+
+                if (
+                    entities.ennemi_en_combat != None and parametres.tour_de == "Joueur"
+                ):  # verfifie le tour du joueur
+
                     if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
                         entities.j1.attaquer(entities.ennemi_en_combat)
                         parametres.tour_de = "enemi"
                         parametres.dernier_changement = pygame.time.get_ticks()
-                    
+
                     if bouton.soin_bt.collidepoint(pygame.mouse.get_pos()):
                         entities.j1.soigner(5)
 
-    if parametres.etat_du_jeu == "menu" :
+    if parametres.etat_du_jeu == "menu":
         UI.menu(screen)
 
     if parametres.etat_du_jeu == "play":
-        UI.play(screen,grille_jeu,entities.j1)
-        
+        UI.play(screen, grille_jeu, entities.j1)
+
         clock.tick(60)  # limite à 60 FPS
 
         temps_actuel = pygame.time.get_ticks()
         keys = pygame.key.get_pressed()
 
-        if parametres.tour_deplacement == "mob": #déplacements des mobs
+        if parametres.tour_deplacement == "mob":  # déplacements des mobs
 
             fonction.bouger_mob(grille_jeu)
+            fonction.player_rencontre(grille_jeu)
 
         if parametres.tour_deplacement == "joueur":
 
-            if temps_actuel - parametres.dernier_mouvement > parametres.delai_mouvement:#delai mouvement du joueur
+            if (
+                temps_actuel - parametres.dernier_mouvement > parametres.delai_mouvement
+            ):  # delai mouvement du joueur
 
-                if entities.j1.nb_deplacement <= parametres.deplacement_joueur_max :
-                    
+                if entities.j1.nb_deplacement <= parametres.deplacement_joueur_max:
+
                     # DROITE
                     if keys[pygame.K_RIGHT]:
                         if player_can_move("droite"):
@@ -111,50 +116,61 @@ while loop :
                             entities.j1.se_deplacer("bas")
                             parametres.dernier_mouvement = temps_actuel
                             fonction.player_rencontre(grille_jeu)
-                else :
+                else:
                     parametres.tour_deplacement = "mob"
                     entities.j1.nb_deplacement = 0
 
-
-    if parametres.etat_du_jeu == 'parametre':
+    if parametres.etat_du_jeu == "parametre":
         UI.parametre(screen)
 
-    if parametres.etat_du_jeu == 'rules':
+    if parametres.etat_du_jeu == "rules":
         UI.rules(screen)
 
-    if parametres.etat_du_jeu == 'combat':
+    if parametres.etat_du_jeu == "combat":
         UI.combat(screen)
-        
-        #déroulement du combat coté enemi
 
-        if entities.ennemi_en_combat.life <= 0 :#mort de l'enemi
+        # déroulement du combat coté enemi
+
+        if entities.ennemi_en_combat.life <= 0:  # mort de l'enemi
+            niveau1 = entities.j1.niveau
             fonction.refill(grille_jeu)
             fonction.recompense(grille_jeu)
-            grille_jeu[entities.ennemi_en_combat.x, entities.ennemi_en_combat.y].contenu = None
-            entities.j1.xp += random.randint(5,10)
-            parametres.niveau_joueur = entities.j1.xp//10
+            grille_jeu[
+                entities.ennemi_en_combat.x, entities.ennemi_en_combat.y
+            ].contenu = None
             entities.ennemi_en_combat = None
-            parametres.etat_du_jeu = 'play'
-        
-        if parametres.tour_de == 'enemi':
+            parametres.tour_deplacement = "joueur"
+            entities.j1.gain_xp()
+            niveau2 = entities.j1.niveau
+            if (
+                niveau1 < niveau2
+            ):  # ouvre la page de selection de l'amelioration du gain de niveau
+                parametres.etat_du_jeu = "niveau"
+            else:
+                parametres.etat_du_jeu = "play"
+
+        if parametres.tour_de == "enemi":
             temps_actuel = pygame.time.get_ticks()
 
             if temps_actuel - parametres.dernier_changement > parametres.delai_combat:
-            
-                if entities.ennemi_en_combat.life<=10 :  #l'enemi se soigne si life<10
+
+                if entities.ennemi_en_combat.life <= 10:  # l'enemi se soigne si life<10
                     entities.ennemi_en_combat.se_soigner()
 
-                #l'enemi attaque 
+                # l'enemi attaque
                 entities.ennemi_en_combat.attaquer(entities.j1)
-                parametres.tour_de = 'Joueur'
-                
-                #mort du joueur
-                if entities.j1.life <= 1 :
+                parametres.tour_de = "Joueur"
+
+                # mort du joueur
+                if entities.j1.life <= 1:
                     parametres.etat_du_jeu = "mort"
 
     if parametres.etat_du_jeu == "mort":
         UI.mort(screen)
         fonction.reset_grille(grille_jeu)
+
+    if parametres.etat_du_jeu == "niveau":
+        UI.niveau(screen)
 
     pygame.display.flip()
 

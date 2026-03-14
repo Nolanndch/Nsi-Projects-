@@ -1,16 +1,17 @@
 import pygame
+
 pygame.init()
 
-#Tous les settings du jeu :
+# Tous les settings du jeu :
 
 ecran = pygame.display.set_mode()
-largeur_ecran , hauteur_ecran = ecran.get_size()
-taille_titres = pygame.font.SysFont(None,40)
-taille_text = pygame.font.SysFont(None,30)
+largeur_ecran, hauteur_ecran = ecran.get_size()
+taille_titres = pygame.font.SysFont(None, 40)
+taille_text = pygame.font.SysFont(None, 30)
 largeur_bouton = 250
 hauteur_bouton = 50
-xbouton = (largeur_ecran-largeur_bouton)//2
-ybouton = (hauteur_ecran-hauteur_bouton)//2
+xbouton = (largeur_ecran - largeur_bouton) // 2
+ybouton = (hauteur_ecran - hauteur_bouton) // 2
 taille_cell = 20
 taille_grille = 40
 
@@ -22,8 +23,6 @@ tour_deplacement = "joueur"
 deplacement_joueur_max = 6
 deplacement_mob_max = 4
 nb_deplacement = 0
-
-niveau_joueur = 0
 
 xmin = 0
 xmax = taille_grille - 1
@@ -45,7 +44,7 @@ difficile_clicked = False
 difficulter_defaut = 3
 nb_item_defaut = 5
 
-#Couleurs :
+# Couleurs :
 
 NOIR = (0, 0, 0)
 GRIS_FONCE = (30, 30, 30)
