@@ -280,3 +280,40 @@ def bouger_mob(grille):
     ):
         parametres.mobs_pas_restants.clear()
         parametres.tour_deplacement = "joueur"
+
+
+def _draw_stat_card(
+    screen, x, y, w, h, label, current, maximum, bar_color, font_small, font_label
+):
+    """Dessine une carte de stat avec label, barre et valeur."""
+    PANEL_CARD = (24, 28, 38)
+    PANEL_BORDER = (40, 46, 60)
+    TEXT_MAIN = (230, 235, 245)
+    TEXT_MUTED = (110, 120, 145)
+
+    # Fond de la carte
+    card_rect = pygame.Rect(x, y, w, h)
+    pygame.draw.rect(screen, PANEL_CARD, card_rect, border_radius=6)
+    pygame.draw.rect(screen, PANEL_BORDER, card_rect, width=1, border_radius=6)
+
+    # Label
+    lbl_surf = font_label.render(label, True, TEXT_MUTED)
+    screen.blit(lbl_surf, (x + 10, y + 8))
+
+    # Valeur
+    val_surf = font_small.render(f"{current}/{maximum}", True, TEXT_MAIN)
+    screen.blit(val_surf, (x + w - val_surf.get_width() - 10, y + 8))
+
+    # Barre de fond
+    bar_x, bar_y = x + 10, y + 32
+    bar_w, bar_h = w - 20, 6
+    pygame.draw.rect(
+        screen, PANEL_BORDER, (bar_x, bar_y, bar_w, bar_h), border_radius=3
+    )
+
+    # Barre remplie
+    fill = max(0, min(1, current / maximum)) if maximum > 0 else 0
+    if fill > 0:
+        pygame.draw.rect(
+            screen, bar_color, (bar_x, bar_y, int(bar_w * fill), bar_h), border_radius=3
+        )
