@@ -316,8 +316,8 @@ def niveau(screen):
 
     fonction.afficher_texte(
         "Vous avez gagné un niveau choisissez une récompense",
-        xbouton - 100,
-        ybouton,
+        xbouton - 280,
+        ybouton - 200,
         largeur_bouton,
         hauteur_bouton,
         parametres.BLANC,
@@ -329,6 +329,36 @@ def niveau(screen):
         xbouton - 600,
         ybouton - 422,
         largeur_bouton,
+        hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text,
+    )
+    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.more_force_bt)
+    fonction.afficher_texte(
+        bouton.more_force_txt,
+        xbouton - 180,
+        ybouton + 75,
+        largeur_bouton // 2,
+        hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text,
+    )
+    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.more_deplacement_bt)
+    fonction.afficher_texte(
+        bouton.more_deplacement_txt,
+        xbouton + 80,
+        ybouton + 75,
+        largeur_bouton // 2,
+        hauteur_bouton,
+        parametres.NOIR,
+        parametres.taille_text,
+    )
+    pygame.draw.rect(screen, parametres.BLEU_FONCE, bouton.more_life_bt)
+    fonction.afficher_texte(
+        bouton.more_life_txt,
+        xbouton + 400,
+        ybouton + 75,
+        largeur_bouton // 2,
         hauteur_bouton,
         parametres.NOIR,
         parametres.taille_text,

@@ -257,14 +257,16 @@ def bouger_mob(grille):
         for cell in grille.values()
         if isinstance(cell.contenu, entities.Mob)
     ]
+    if not mobs_a_bouger:
+        parametres.tour_deplacement = "joueur"
+        return
 
-    # Initialise TOUS les mobs d'un coup au début du tour
     for enemi in mobs_a_bouger:
         if enemi not in parametres.mobs_pas_restants:
             parametres.mobs_pas_restants[enemi] = parametres.deplacement_mob_max
 
     for enemi in mobs_a_bouger:
-        if parametres.mobs_pas_restants[enemi] > 0:
+        if parametres.mobs_pas_restants.get(enemi, 0) > 0:
             grille[enemi.x, enemi.y].contenu = None
             enemi.se_deplacer(grille)
             player_rencontre(grille)
@@ -273,7 +275,8 @@ def bouger_mob(grille):
 
     parametres.dernier_mouvement_mob = temps_actuel
 
-    # Maintenant le check est fiable : tous les mobs sont dans le dict
-    if all(p == 0 for p in parametres.mobs_pas_restants.values()):
+    if parametres.mobs_pas_restants and all(
+        p == 0 for p in parametres.mobs_pas_restants.values()
+    ):
         parametres.mobs_pas_restants.clear()
         parametres.tour_deplacement = "joueur"

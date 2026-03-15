@@ -25,6 +25,9 @@ while loop:
             if event.key == pygame.K_e:
                 loop = False
 
+            if event.key == pygame.K_a:
+                parametres.etat_du_jeu = "niveau"
+
         if event.type == pygame.MOUSEBUTTONDOWN:  # les verifs des boutons
 
             if bouton.exit_bt.collidepoint(pygame.mouse.get_pos()):
@@ -64,6 +67,21 @@ while loop:
 
                     if bouton.soin_bt.collidepoint(pygame.mouse.get_pos()):
                         entities.j1.soigner(5)
+
+            if parametres.etat_du_jeu == "niveau":
+
+                if bouton.more_deplacement_bt.collidepoint(pygame.mouse.get_pos()):
+                    parametres.deplacement_joueur_max += 1
+                    fonction.etat_precedent(loop)
+
+                if bouton.more_life_bt.collidepoint(pygame.mouse.get_pos()):
+                    entities.j1.max_life += 10
+                    entities.j1.life += 10
+                    fonction.etat_precedent(loop)
+
+                if bouton.more_force_bt.collidepoint(pygame.mouse.get_pos()):
+                    entities.j1.power += 10
+                    fonction.etat_precedent(loop)
 
     if parametres.etat_du_jeu == "menu":
         UI.menu(screen)

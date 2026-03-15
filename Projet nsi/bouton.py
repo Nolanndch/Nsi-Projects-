@@ -44,3 +44,16 @@ moyen_txt = "Moyen"
 
 difficile_bt = pygame.Rect(xbouton - 500, ybouton + 140, largeur_bouton, hauteur_bouton)
 difficile_txt = "Difficile"
+
+# bouton récompense niveau
+
+more_force_bt = pygame.Rect(xbouton - 300, ybouton + 80, largeur_bouton, hauteur_bouton)
+more_force_txt = "Force ++"
+
+
+more_deplacement_bt = pygame.Rect(xbouton, ybouton + 80, largeur_bouton, hauteur_bouton)
+more_deplacement_txt = "+1 deplacement"
+
+
+more_life_bt = pygame.Rect(xbouton + 300, ybouton + 80, largeur_bouton, hauteur_bouton)
+more_life_txt = "Life max +"

@@ -41,7 +41,7 @@ class Player:  # classe des joueurs
         self.nb_deplacement += 1
 
     def gain_xp(self):
-        self.xp += random.randint(5, 10)
+        self.xp += 10
         while self.xp >= 10:
             self.xp -= 10
             self.niveau += 1
@@ -83,6 +83,7 @@ class Mob:  # classe des enemis
             self.y += 1
         if j1.y < self.y and grille[self.x, self.y - 1].contenu == None:
             self.y -= 1
+        """
         else:
             if not grille[self.x + 1, self.y].contenu == None:
                 self.x -= 1
@@ -92,6 +93,7 @@ class Mob:  # classe des enemis
                 self.x += 1
             if not grille[self.x - 1, self.y].contenu == None:
                 self.x += 1
+        """
 
         self.nb_deplacement += 1
 
