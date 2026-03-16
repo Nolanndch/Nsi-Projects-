@@ -167,9 +167,12 @@ def etat_precedent(loop):
     ):
         parametres.etat_du_jeu = "menu"
 
-    if parametres.etat_du_jeu == "combat" or parametres.etat_du_jeu == "niveau":
+    if parametres.etat_du_jeu == "niveau":
         parametres.etat_du_jeu = "play"
-
+        
+    if parametres.etat_du_jeu == "combat":
+        parametres.etat_du_jeu = "play"
+        entities.ennemi_en_combat = None
 
 def reset_grille(grille):
     # nettoie la grille apres la mort du joueur et la rend prete a reprendre une partie

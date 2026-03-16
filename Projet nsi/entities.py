@@ -6,11 +6,11 @@ class Player:  # classe des joueurs
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.life = 100
-        self.max_life = 100
+        self.life = 50
+        self.max_life = 50
         self.armor = 0
         self.max_armor = 50
-        self.power = 45
+        self.power = 10
         self.couleur = parametres.NOIR
         self.inventaire = []
         self.nb_deplacement = 0
@@ -41,7 +41,7 @@ class Player:  # classe des joueurs
         self.nb_deplacement += 1
 
     def gain_xp(self):
-        self.xp += 10
+        self.xp += random.randint(5,10)
         while self.xp >= 10:
             self.xp -= 10
             self.niveau += 1

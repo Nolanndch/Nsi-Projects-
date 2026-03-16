@@ -3,6 +3,7 @@ import parametres
 import bouton
 import fonction
 import entities
+import math
 from parametres import xbouton, ybouton, largeur_bouton, hauteur_bouton, taille_cell
 
 screen = parametres.ecran
@@ -56,7 +57,7 @@ def menu(screen):
     font_btn = pygame.font.SysFont("Courier New", 18, bold=True)
     font_label = pygame.font.SysFont("Courier New", 15)
 
-    title_surf = font_title.render("DUNGEON", True, TEXT_MAIN)
+    title_surf = font_title.render("Wave puncher", True, TEXT_MAIN)
     sub_surf = font_sub.render(
         "v0.1  —  un jeu de rôle au tour par tour", True, TEXT_MUTED
     )
@@ -249,20 +250,77 @@ def play(screen, grille_jeu, joueur):
         pygame.draw.rect(screen, GRID_BG, (rx, ry, taille_cell, taille_cell))
         pygame.draw.rect(screen, GRID_LINE, (rx, ry, taille_cell, taille_cell), 1)
 
-    jx = grid_x + joueur.x * taille_cell + 2
-    jy = grid_y + joueur.y * taille_cell + 2
-    s = taille_cell - 4
-    pygame.draw.rect(screen, ACCENT, (jx, jy, s, s), border_radius=2)
-    pygame.draw.rect(screen, TEXT_MAIN, (jx, jy, s, s), width=1, border_radius=2)
+    # ── Joueur ───────────────────────────────────────────────────
+    jx = grid_x + joueur.x * taille_cell
+    jy = grid_y + joueur.y * taille_cell
+    cx_j = jx + taille_cell // 2
+    cy_j = jy + taille_cell // 2
+    r = taille_cell // 2 - 2
 
+    # Halo joueur
+    halo = pygame.Surface((taille_cell * 3, taille_cell * 3), pygame.SRCALPHA)
+    pygame.draw.circle(halo, (99, 179, 237, 35), (taille_cell + taille_cell // 2, taille_cell + taille_cell // 2), taille_cell)
+    screen.blit(halo, (cx_j - taille_cell - taille_cell // 2, cy_j - taille_cell - taille_cell // 2))
+
+    # Losange joueur (bleu accent)
+    points = [
+        (cx_j,     cy_j - r),
+        (cx_j + r, cy_j),
+        (cx_j,     cy_j + r),
+        (cx_j - r, cy_j),
+    ]
+    pygame.draw.polygon(screen, (99, 179, 237), points)
+    pygame.draw.polygon(screen, (180, 220, 255), points, 1)
+
+    # ── Entités ───────────────────────────────────────────────────
     for cell in grille_jeu.values():
-        if cell.contenu is not None:
-            ex = grid_x + cell.x * taille_cell + taille_cell // 2
-            ey = grid_y + cell.y * taille_cell + taille_cell // 2
-            r = taille_cell // 2 - 2
-            pygame.draw.circle(screen, cell.contenu.couleur, (ex, ey), r)
-            pygame.draw.circle(screen, (0, 0, 0), (ex, ey), r, 1)
+        if cell.contenu is None:
+            continue
 
+        ex = grid_x + cell.x * taille_cell + taille_cell // 2
+        ey = grid_y + cell.y * taille_cell + taille_cell // 2
+        r  = taille_cell // 2 - 2
+        col = cell.contenu.couleur
+
+        # Détecte le type par couleur
+        is_mob   = (col[0] > 150 and col[1] < 100)                    # rouge  → mob
+        is_heal  = (col[1] > 150 and col[0] < 100)                    # vert   → soin
+        is_shield= (col[2] > 150 and col[0] < 100 and col[1] < 100)  # bleu   → shield
+
+        if is_mob:
+            # Triangle pointé vers le bas (menaçant)
+            pts = [
+                (ex,     ey - r),
+                (ex + r, ey + r),
+                (ex - r, ey + r),
+            ]
+            pygame.draw.polygon(screen, (220, 60, 60), pts)
+            pygame.draw.polygon(screen, (255, 120, 120), pts, 1)
+
+        elif is_heal:
+            # Croix (soin)
+            t = max(2, taille_cell // 6)
+            pygame.draw.rect(screen, (72, 199, 142), (ex - t, ey - r, t * 2, r * 2))
+            pygame.draw.rect(screen, (72, 199, 142), (ex - r, ey - t, r * 2, t * 2))
+            # Contour léger
+            pygame.draw.rect(screen, (140, 230, 180), (ex - t, ey - r, t * 2, r * 2), 1)
+            pygame.draw.rect(screen, (140, 230, 180), (ex - r, ey - t, r * 2, t * 2), 1)
+
+        elif is_shield:
+            # Hexagone (bouclier)
+            pts = [
+                (int(ex + r * math.cos(math.radians(a))),
+                 int(ey + r * math.sin(math.radians(a))))
+                for a in range(0, 360, 60)
+            ]
+            pygame.draw.polygon(screen, (56, 130, 200), pts)
+            pygame.draw.polygon(screen, (99, 179, 237), pts, 1)
+
+        else:
+            # Fallback cercle
+            pygame.draw.circle(screen, col, (ex, ey), r)
+            pygame.draw.circle(screen, (200, 200, 200), (ex, ey), r, 1)
+            
     exit_rect = pygame.Rect(12, 12, 70, 32)
     bouton.exit_bt.x, bouton.exit_bt.y = 12, 12
     bouton.exit_bt.width, bouton.exit_bt.height = 70, 32
@@ -390,7 +448,7 @@ def rules(screen):
         (
             "NIVEAU",
             ACCENT,
-            "Battre des ennemis donne de l'XP. Monte de niveau pour progresser.",
+            "Battre des ennemis donne de l'XP pour évoluer.",
         ),
         ("MORT", (252, 129, 74), "Si ta vie tombe à 0, la partie est terminée."),
     ]
