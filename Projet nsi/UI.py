@@ -312,7 +312,7 @@ def parametre(screen):
         (bouton.moyen_bt, bouton.moyen_txt, parametres.moyen_clicked, (250, 204, 21)),
         (
             bouton.difficile_bt,
-            bouton.difficile_bt,
+            bouton.difficile_txt,
             parametres.difficile_clicked,
             (252, 129, 74),
         ),
