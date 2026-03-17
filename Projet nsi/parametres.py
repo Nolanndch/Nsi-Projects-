@@ -12,7 +12,7 @@ largeur_bouton = 250
 hauteur_bouton = 50
 xbouton = (largeur_ecran - largeur_bouton) // 2
 ybouton = (hauteur_ecran - hauteur_bouton) // 2
-taille_cell = 50
+taille_cell = 20
 taille_grille = 40
 
 etat_du_jeu = "menu"

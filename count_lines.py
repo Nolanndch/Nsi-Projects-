@@ -15,7 +15,9 @@ import argparse
 from pathlib import Path
 
 
-def count_lines_in_file(filepath: Path, count_blank: bool, count_comments: bool) -> dict:
+def count_lines_in_file(
+    filepath: Path, count_blank: bool, count_comments: bool
+) -> dict:
     """Compte les lignes d'un fichier Python."""
     total = 0
     blank = 0
@@ -129,7 +131,9 @@ def main():
     print()
     print_separator()
 
-    files = [f for f in find_python_files(root) if f.resolve() != Path(__file__).resolve()]
+    files = [
+        f for f in find_python_files(root) if f.resolve() != Path(__file__).resolve()
+    ]
 
     if not files:
         print("Aucun fichier .py trouvé.")
@@ -171,7 +175,7 @@ def main():
 
         rel_str = str(rel)
         if len(rel_str) > col_file:
-            rel_str = "…" + rel_str[-(col_file - 1):]
+            rel_str = "…" + rel_str[-(col_file - 1) :]
 
         print(
             f"{rel_str:<{col_file}} "
