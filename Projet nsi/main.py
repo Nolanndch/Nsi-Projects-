@@ -8,7 +8,9 @@ from fonction import player_can_move
 
 screen = parametres.ecran
 grille_jeu = fonction.creer_grille(parametres.taille_grille)
-fonction.contenue_grille(grille_jeu)
+grille_1c1 = fonction.creer_grille(parametres.taille_grille)
+fonction.contenue_grille(grille_jeu, 1)
+fonction.contenue_grille(grille_1c1, 2)
 fonction.tour()
 
 clock = pygame.time.Clock()
@@ -40,6 +42,8 @@ while loop:
                     parametres.etat_du_jeu = "parametre"
                 if bouton.rules_bt.collidepoint(pygame.mouse.get_pos()):
                     parametres.etat_du_jeu = "rules"
+                if bouton.jcj_bt.collidepoint(pygame.mouse.get_pos()):
+                    parametres.etat_du_jeu = "jcj"
 
             if parametres.etat_du_jeu == "parametre":
 
@@ -68,7 +72,7 @@ while loop:
                     if bouton.soin_bt.collidepoint(pygame.mouse.get_pos()):
                         entities.j1.soigner(5)
 
-            if parametres.etat_du_jeu == "niveau":
+            if parametres.etat_du_jeu == "niveau":  # selection de l'amelioration
 
                 if bouton.more_deplacement_bt.collidepoint(pygame.mouse.get_pos()):
                     parametres.deplacement_joueur_max += 1
@@ -82,6 +86,18 @@ while loop:
                 if bouton.more_force_bt.collidepoint(pygame.mouse.get_pos()):
                     entities.j1.power += 10
                     fonction.etat_precedent(loop)
+
+            if parametres.etat_du_jeu == "combat_jcj":  # deroulement du combat en jcj
+
+                if parametres.tour_de == "j1":  # verfifie le tour du joueur
+
+                    if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
+                        entities.j1.attaquer(entities.j2)
+
+                if parametres.tour_de == "j2":  # verfifie le tour du joueur
+
+                    if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
+                        entities.j1.attaquer(entities.j2)
 
     if parametres.etat_du_jeu == "menu":
         UI.menu(screen)
@@ -189,6 +205,95 @@ while loop:
 
     if parametres.etat_du_jeu == "niveau":
         UI.niveau(screen)
+
+    if parametres.etat_du_jeu == "jcj":
+        UI.jcj(screen, grille_1c1, entities.j1, entities.j2)
+
+        clock.tick(60)  # limite à 60 FPS
+
+        temps_actuel = pygame.time.get_ticks()
+        keys = pygame.key.get_pressed()
+
+        if parametres.tour_de_jcj == "j1":  # si c'est le tour du joueur1
+
+            if (
+                temps_actuel - parametres.dernier_mouvement > parametres.delai_mouvement
+            ):  # delai mouvement du joueur
+
+                if entities.j1.nb_deplacement <= parametres.deplacement_joueur_max:
+
+                    # DROITE
+                    if keys[pygame.K_RIGHT]:
+                        if player_can_move("droite"):
+                            entities.j1.se_deplacer("droite")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre(grille_1c1)
+
+                    # GAUCHE
+                    elif keys[pygame.K_LEFT]:
+                        if player_can_move("gauche"):
+                            entities.j1.se_deplacer("gauche")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre(grille_1c1)
+
+                    # HAUT
+                    elif keys[pygame.K_UP]:
+                        if player_can_move("haut"):
+                            entities.j1.se_deplacer("haut")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre(grille_1c1)
+
+                    # BAS
+                    elif keys[pygame.K_DOWN]:
+                        if player_can_move("bas"):
+                            entities.j1.se_deplacer("bas")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre(grille_1c1)
+                else:
+                    parametres.tour_de_jcj = "j2"
+                    entities.j1.nb_deplacement = 0
+
+        elif parametres.tour_de_jcj == "j2":  # si c'est le tour du joueur2
+
+            if (
+                temps_actuel - parametres.dernier_mouvement > parametres.delai_mouvement
+            ):  # delai mouvement du joueur
+
+                if entities.j2.nb_deplacement <= parametres.deplacement_joueur_max:
+
+                    # DROITE
+                    if keys[pygame.K_RIGHT]:
+                        if player_can_move("droite"):
+                            entities.j2.se_deplacer("droite")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre(grille_1c1)
+
+                    # GAUCHE
+                    elif keys[pygame.K_LEFT]:
+                        if player_can_move("gauche"):
+                            entities.j2.se_deplacer("gauche")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre(grille_1c1)
+
+                    # HAUT
+                    elif keys[pygame.K_UP]:
+                        if player_can_move("haut"):
+                            entities.j2.se_deplacer("haut")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre(grille_1c1)
+
+                    # BAS
+                    elif keys[pygame.K_DOWN]:
+                        if player_can_move("bas"):
+                            entities.j2.se_deplacer("bas")
+                            parametres.dernier_mouvement = temps_actuel
+                            fonction.player_rencontre(grille_1c1)
+                else:
+                    parametres.tour_de_jcj = "j1"
+                    entities.j2.nb_deplacement = 0
+
+        if parametres.etat_du_jeu == "combat_jcj":
+            UI.combat_jcj(screen)
 
     pygame.display.flip()
 

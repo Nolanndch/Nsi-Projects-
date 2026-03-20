@@ -41,13 +41,14 @@ class Player:  # classe des joueurs
         self.nb_deplacement += 1
 
     def gain_xp(self):
-        self.xp += random.randint(5,10)
+        self.xp += random.randint(5, 10)
         while self.xp >= 10:
             self.xp -= 10
             self.niveau += 1
 
 
 j1 = Player(5, 6)
+j2 = Player(10, 5)
 
 
 class Mob:  # classe des enemis
@@ -119,7 +120,10 @@ class Objet:
         j1.life += self.pv
 
     def proteger(self):
-        j1.armor += self.protection
+        if parametres.tour_de_jcj == "j1":
+            j1.armor += self.protection
+        else:
+            j2.armor += self.protection
 
 
 soin = Objet("soin", 2, 0, 0, parametres.VERT_FONCE)

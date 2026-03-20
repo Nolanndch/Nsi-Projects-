@@ -77,12 +77,13 @@ def menu(screen):
     btn_x = sw // 2 - btn_w // 2
     buttons = [
         (bouton.Jouer_bt, bouton.Jouer_txt, ACCENT, True),
+        (bouton.jcj_bt, bouton.jcj_txt, CARD_BG, False),
         (bouton.parametre_bt, bouton.parametre_txt, CARD_BG, False),
         (bouton.rules_bt, bouton.rules_txt, CARD_BG, False),
     ]
 
     for i, (rect, txt, bg, is_primary) in enumerate(buttons):
-        by = sh // 2 - 90 + i * 66
+        by = sh // 2 - 120 + i * 62
         rect.x, rect.y = btn_x, by
         rect.width, rect.height = btn_w, btn_h
         btn_rect = pygame.Rect(btn_x, by, btn_w, btn_h)
@@ -259,14 +260,22 @@ def play(screen, grille_jeu, joueur):
 
     # Halo joueur
     halo = pygame.Surface((taille_cell * 3, taille_cell * 3), pygame.SRCALPHA)
-    pygame.draw.circle(halo, (99, 179, 237, 35), (taille_cell + taille_cell // 2, taille_cell + taille_cell // 2), taille_cell)
-    screen.blit(halo, (cx_j - taille_cell - taille_cell // 2, cy_j - taille_cell - taille_cell // 2))
+    pygame.draw.circle(
+        halo,
+        (99, 179, 237, 35),
+        (taille_cell + taille_cell // 2, taille_cell + taille_cell // 2),
+        taille_cell,
+    )
+    screen.blit(
+        halo,
+        (cx_j - taille_cell - taille_cell // 2, cy_j - taille_cell - taille_cell // 2),
+    )
 
     # Losange joueur (bleu accent)
     points = [
-        (cx_j,     cy_j - r),
+        (cx_j, cy_j - r),
         (cx_j + r, cy_j),
-        (cx_j,     cy_j + r),
+        (cx_j, cy_j + r),
         (cx_j - r, cy_j),
     ]
     pygame.draw.polygon(screen, (99, 179, 237), points)
@@ -279,18 +288,18 @@ def play(screen, grille_jeu, joueur):
 
         ex = grid_x + cell.x * taille_cell + taille_cell // 2
         ey = grid_y + cell.y * taille_cell + taille_cell // 2
-        r  = taille_cell // 2 - 2
+        r = taille_cell // 2 - 2
         col = cell.contenu.couleur
 
         # Détecte le type par couleur
-        is_mob   = (col[0] > 150 and col[1] < 100)                    # rouge  → mob
-        is_heal  = (col[1] > 150 and col[0] < 100)                    # vert   → soin
-        is_shield= (col[2] > 150 and col[0] < 100 and col[1] < 100)  # bleu   → shield
+        is_mob = col[0] > 150 and col[1] < 100  # rouge  → mob
+        is_heal = col[1] > 150 and col[0] < 100  # vert   → soin
+        is_shield = col[2] > 150 and col[0] < 100 and col[1] < 100  # bleu   → shield
 
         if is_mob:
             # Triangle pointé vers le bas (menaçant)
             pts = [
-                (ex,     ey - r),
+                (ex, ey - r),
                 (ex + r, ey + r),
                 (ex - r, ey + r),
             ]
@@ -309,8 +318,10 @@ def play(screen, grille_jeu, joueur):
         elif is_shield:
             # Hexagone (bouclier)
             pts = [
-                (int(ex + r * math.cos(math.radians(a))),
-                 int(ey + r * math.sin(math.radians(a))))
+                (
+                    int(ex + r * math.cos(math.radians(a))),
+                    int(ey + r * math.sin(math.radians(a))),
+                )
                 for a in range(0, 360, 60)
             ]
             pygame.draw.polygon(screen, (56, 130, 200), pts)
@@ -320,7 +331,7 @@ def play(screen, grille_jeu, joueur):
             # Fallback cercle
             pygame.draw.circle(screen, col, (ex, ey), r)
             pygame.draw.circle(screen, (200, 200, 200), (ex, ey), r, 1)
-            
+
     exit_rect = pygame.Rect(12, 12, 70, 32)
     bouton.exit_bt.x, bouton.exit_bt.y = 12, 12
     bouton.exit_bt.width, bouton.exit_bt.height = 70, 32
@@ -512,7 +523,7 @@ def combat(screen):
     cy_center = sh // 2
 
     # Badge de tour
-    is_joueur = parametres.tour_de == "joueur"
+    is_joueur = parametres.tour_de == "Joueur"
     tour_txt = "▶  TON TOUR" if is_joueur else "▶  TOUR ENNEMI"
     tour_col = ACCENT if is_joueur else DANGER
     badge_w, badge_h = 220, 34
@@ -630,18 +641,6 @@ def combat(screen):
         f"Inventaire : {str(entities.j1.inventaire)}", True, TEXT_MUTED
     )
     screen.blit(inv_surf, (cx - inv_surf.get_width() // 2, sh - 50))
-
-    # Exit
-    exit_rect = pygame.Rect(12, 12, 70, 32)
-    bouton.exit_bt.x, bouton.exit_bt.y = 12, 12
-    bouton.exit_bt.width, bouton.exit_bt.height = 70, 32
-    pygame.draw.rect(screen, CARD_BG, exit_rect, border_radius=4)
-    pygame.draw.rect(screen, PANEL_BORDER, exit_rect, width=1, border_radius=4)
-    exit_lbl = font_label.render("EXIT", True, TEXT_MUTED)
-    screen.blit(
-        exit_lbl,
-        (12 + (70 - exit_lbl.get_width()) // 2, 12 + (32 - exit_lbl.get_height()) // 2),
-    )
 
 
 # ── MORT ──────────────────────────────────────────────────────────────────────
@@ -777,4 +776,394 @@ def niveau(screen):
     screen.blit(
         exit_lbl,
         (12 + (70 - exit_lbl.get_width()) // 2, 12 + (32 - exit_lbl.get_height()) // 2),
+    )
+
+
+# ── JcJ ─────────────────────────────────────────────────────────────────
+def jcj(screen, grille_jeu, joueur1, joueur2):
+    import math
+
+    BG_COLOR = (13, 16, 23)
+    PANEL_BG = (15, 17, 23)
+    PANEL_BORDER = (40, 46, 60)
+    CARD_BG = (24, 28, 38)
+    TEXT_MAIN = (230, 235, 245)
+    TEXT_MUTED = (110, 120, 145)
+    ACCENT = (99, 179, 237)
+    ACCENT_J2 = (251, 113, 133)  # rose/rouge pour j2
+    HP_COLOR = (72, 199, 142)
+    ARMOR_COLOR = (99, 179, 237)
+    XP_COLOR = (250, 204, 21)
+    GRID_BG = (22, 28, 42)
+    GRID_LINE = (38, 48, 68)
+    TURN_J1 = (99, 179, 237)
+    TURN_J2 = (251, 113, 133)
+
+    sw, sh = screen.get_width(), screen.get_height()
+    screen.fill(BG_COLOR)
+
+    font_title = pygame.font.SysFont("Courier New", 18, bold=True)
+    font_label = pygame.font.SysFont("Courier New", 15)
+    font_small = pygame.font.SysFont("Courier New", 16, bold=True)
+    font_value = pygame.font.SysFont("Courier New", 26, bold=True)
+
+    panel_w = 220
+
+    # ── Fonction pour dessiner un panneau de stats ────────────────
+    def draw_panel(joueur, side, accent_color):
+        """side = 'left' ou 'right'"""
+        if side == "left":
+            px = 16
+        else:
+            px = sw - panel_w - 16
+
+        panel_rect = pygame.Rect(px - 8, 0, panel_w + 24, sh)
+        pygame.draw.rect(screen, PANEL_BG, panel_rect)
+
+        if side == "left":
+            pygame.draw.line(
+                screen, PANEL_BORDER, (px + panel_w + 8, 0), (px + panel_w + 8, sh), 1
+            )
+        else:
+            pygame.draw.line(screen, PANEL_BORDER, (px - 8, 0), (px - 8, sh), 1)
+
+        # Titre
+        nom = "JOUEUR 1" if side == "left" else "JOUEUR 2"
+        title_surf = font_title.render(nom, True, accent_color)
+        screen.blit(title_surf, (px + (panel_w - title_surf.get_width()) // 2, 20))
+        pygame.draw.line(screen, PANEL_BORDER, (px, 44), (px + panel_w, 44), 1)
+
+        cy = 58
+
+        # Niveau
+        niv_label = font_label.render("NIVEAU", True, TEXT_MUTED)
+        screen.blit(niv_label, (px + 10, cy))
+        niv_val = font_value.render(str(joueur.niveau), True, accent_color)
+        screen.blit(niv_val, (px + panel_w - niv_val.get_width() - 10, cy - 4))
+        cy += 36
+
+        # XP
+        _draw_stat_card(
+            screen,
+            px,
+            cy,
+            panel_w,
+            52,
+            "XP",
+            joueur.xp,
+            10,
+            XP_COLOR,
+            font_small,
+            font_label,
+        )
+        cy += 64
+
+        # Vie
+        _draw_stat_card(
+            screen,
+            px,
+            cy,
+            panel_w,
+            52,
+            "VIE",
+            joueur.life,
+            joueur.max_life,
+            HP_COLOR,
+            font_small,
+            font_label,
+        )
+        cy += 64
+
+        # Armure
+        _draw_stat_card(
+            screen,
+            px,
+            cy,
+            panel_w,
+            52,
+            "ARMURE",
+            joueur.armor,
+            joueur.max_armor,
+            ARMOR_COLOR,
+            font_small,
+            font_label,
+        )
+        cy += 74
+
+        # Déplacements
+        pygame.draw.line(screen, PANEL_BORDER, (px, cy - 8), (px + panel_w, cy - 8), 1)
+        dep_label = font_label.render("DÉPLACEMENTS", True, TEXT_MUTED)
+        screen.blit(dep_label, (px + 10, cy))
+        cy += 22
+        deps = getattr(
+            parametres,
+            f"deplacement_j{'1' if side == 'left' else '2'}_restants",
+            parametres.deplacement_joueur_max,
+        )
+        dep_val = font_value.render(str(deps), True, TEXT_MAIN)
+        screen.blit(dep_val, (px + (panel_w - dep_val.get_width()) // 2, cy))
+        cy += 50
+
+        # Badge tour
+        pygame.draw.line(screen, PANEL_BORDER, (px, cy), (px + panel_w, cy), 1)
+        cy += 14
+        is_my_turn = parametres.tour_de_jcj == ("j1" if side == "left" else "j2")
+        badge_color = accent_color if is_my_turn else PANEL_BORDER
+        badge_txt = "TON TOUR" if is_my_turn else "EN ATTENTE"
+        badge_rect = pygame.Rect(px + 10, cy, panel_w - 20, 32)
+        pygame.draw.rect(screen, CARD_BG, badge_rect, border_radius=5)
+        pygame.draw.rect(screen, badge_color, badge_rect, width=1, border_radius=5)
+        badge_surf = font_label.render(badge_txt, True, badge_color)
+        screen.blit(
+            badge_surf,
+            (
+                px + (panel_w - badge_surf.get_width()) // 2,
+                cy + (32 - badge_surf.get_height()) // 2,
+            ),
+        )
+
+    draw_panel(joueur1, "left", ACCENT)
+    draw_panel(joueur2, "right", ACCENT_J2)
+
+    # ── Grille centrée entre les deux panneaux ────────────────────
+    grille_size = parametres.taille_grille * taille_cell
+    grid_x = (sw - grille_size) // 2
+    grid_y = (sh - grille_size) // 2
+
+    pygame.draw.rect(
+        screen,
+        GRID_BG,
+        (grid_x - 2, grid_y - 2, grille_size + 4, grille_size + 4),
+        border_radius=4,
+    )
+
+    for (cx_g, cy_g), cell in grille_jeu.items():
+        rx = grid_x + cx_g * taille_cell
+        ry = grid_y + cy_g * taille_cell
+        pygame.draw.rect(screen, GRID_BG, (rx, ry, taille_cell, taille_cell))
+        pygame.draw.rect(screen, GRID_LINE, (rx, ry, taille_cell, taille_cell), 1)
+
+    # ── Joueur 1 — losange bleu ───────────────────────────────────
+    for jou, accent in [(joueur1, ACCENT), (joueur2, ACCENT_J2)]:
+        jx = grid_x + jou.x * taille_cell
+        jy = grid_y + jou.y * taille_cell
+        cx_j = jx + taille_cell // 2
+        cy_j = jy + taille_cell // 2
+        r = taille_cell // 2 - 2
+
+        # Halo
+        halo = pygame.Surface((taille_cell * 3, taille_cell * 3), pygame.SRCALPHA)
+        pygame.draw.circle(
+            halo,
+            (*accent, 35),
+            (taille_cell + taille_cell // 2, taille_cell + taille_cell // 2),
+            taille_cell,
+        )
+        screen.blit(
+            halo,
+            (
+                cx_j - taille_cell - taille_cell // 2,
+                cy_j - taille_cell - taille_cell // 2,
+            ),
+        )
+
+        # Losange
+        points = [
+            (cx_j, cy_j - r),
+            (cx_j + r, cy_j),
+            (cx_j, cy_j + r),
+            (cx_j - r, cy_j),
+        ]
+        pygame.draw.polygon(screen, accent, points)
+        light = tuple(min(255, c + 80) for c in accent)
+        pygame.draw.polygon(screen, light, points, 1)
+
+    # ── Items sur la grille ───────────────────────────────────────
+    for cell in grille_jeu.values():
+        if cell.contenu is None:
+            continue
+
+        ex = grid_x + cell.x * taille_cell + taille_cell // 2
+        ey = grid_y + cell.y * taille_cell + taille_cell // 2
+        r = taille_cell // 2 - 2
+        col = cell.contenu.couleur
+
+        is_heal = col[1] > 150 and col[0] < 100
+        is_shield = col[2] > 150 and col[0] < 100 and col[1] < 100
+
+        if is_heal:
+            t = max(2, taille_cell // 6)
+            pygame.draw.rect(screen, (72, 199, 142), (ex - t, ey - r, t * 2, r * 2))
+            pygame.draw.rect(screen, (72, 199, 142), (ex - r, ey - t, r * 2, t * 2))
+            pygame.draw.rect(screen, (140, 230, 180), (ex - t, ey - r, t * 2, r * 2), 1)
+            pygame.draw.rect(screen, (140, 230, 180), (ex - r, ey - t, r * 2, t * 2), 1)
+
+        elif is_shield:
+            pts = [
+                (
+                    int(ex + r * math.cos(math.radians(a))),
+                    int(ey + r * math.sin(math.radians(a))),
+                )
+                for a in range(0, 360, 60)
+            ]
+            pygame.draw.polygon(screen, (56, 130, 200), pts)
+            pygame.draw.polygon(screen, (99, 179, 237), pts, 1)
+
+        else:
+            pygame.draw.circle(screen, col, (ex, ey), r)
+            pygame.draw.circle(screen, (200, 200, 200), (ex, ey), r, 1)
+
+    # ── Exit ─────────────────────────────────────────────────────
+    exit_rect = pygame.Rect(12, 12, 70, 32)
+    bouton.exit_bt.x, bouton.exit_bt.y = 12, 12
+    bouton.exit_bt.width, bouton.exit_bt.height = 70, 32
+    pygame.draw.rect(screen, CARD_BG, exit_rect, border_radius=4)
+    pygame.draw.rect(screen, PANEL_BORDER, exit_rect, width=1, border_radius=4)
+    exit_lbl = font_label.render("EXIT", True, TEXT_MUTED)
+    screen.blit(
+        exit_lbl,
+        (12 + (70 - exit_lbl.get_width()) // 2, 12 + (32 - exit_lbl.get_height()) // 2),
+    )
+
+
+# ── COMBAT JCJ ───────────────────────────────────────────────────────────────
+def combat_jcj(screen):
+    BG_COLOR = (13, 16, 23)
+    PANEL_BORDER = (40, 46, 60)
+    CARD_BG = (24, 28, 38)
+    TEXT_MAIN = (230, 235, 245)
+    TEXT_MUTED = (110, 120, 145)
+    ACCENT = (99, 179, 237)  # bleu j1
+    ACCENT_J2 = (251, 113, 133)  # rose j2
+    HP_COLOR = (72, 199, 142)
+    ARMOR_COLOR = (99, 179, 237)
+    BTN_ATTACK = (220, 60, 60)
+    BTN_HEAL = (72, 199, 142)
+
+    sw, sh = screen.get_width(), screen.get_height()
+    screen.fill(BG_COLOR)
+
+    font_label = pygame.font.SysFont("Courier New", 15)
+    font_small = pygame.font.SysFont("Courier New", 16, bold=True)
+    font_name = pygame.font.SysFont("Courier New", 24, bold=True)
+    font_btn = pygame.font.SysFont("Courier New", 18, bold=True)
+    font_turn = pygame.font.SysFont("Courier New", 15)
+
+    cx = sw // 2
+    cy_center = sh // 2
+
+    # ── Badge de tour ─────────────────────────────────────────────
+    is_j1 = parametres.tour_de_jcj == "j1"
+    tour_txt = "▶  TOUR JOUEUR 1" if is_j1 else "▶  TOUR JOUEUR 2"
+    tour_col = ACCENT if is_j1 else ACCENT_J2
+    badge_w, badge_h = 260, 34
+    badge_rect = pygame.Rect(cx - badge_w // 2, 18, badge_w, badge_h)
+    pygame.draw.rect(screen, CARD_BG, badge_rect, border_radius=17)
+    pygame.draw.rect(screen, tour_col, badge_rect, width=1, border_radius=17)
+    tour_surf = font_turn.render(tour_txt, True, tour_col)
+    screen.blit(
+        tour_surf,
+        (cx - tour_surf.get_width() // 2, 18 + (badge_h - tour_surf.get_height()) // 2),
+    )
+
+    # ── Ligne VS centrale ─────────────────────────────────────────
+    pygame.draw.line(screen, PANEL_BORDER, (cx, 80), (cx, sh - 80), 1)
+    vs_surf = font_small.render("VS", True, TEXT_MUTED)
+    vs_bg = pygame.Rect(cx - 20, cy_center - 16, 40, 32)
+    pygame.draw.rect(screen, BG_COLOR, vs_bg)
+    screen.blit(
+        vs_surf, (cx - vs_surf.get_width() // 2, cy_center - vs_surf.get_height() // 2)
+    )
+
+    # ── Fiches joueurs ────────────────────────────────────────────
+    def draw_fighter(label, life, max_life, armor, max_armor, side, accent):
+        card_w = sw // 2 - 80
+        card_x = 40 if side == -1 else cx + 40
+        card_y = cy_center - 150
+
+        name_surf = font_name.render(label, True, accent)
+        screen.blit(name_surf, (card_x, card_y))
+        card_y += 44
+
+        _draw_stat_card(
+            screen,
+            card_x,
+            card_y,
+            card_w,
+            52,
+            "VIE",
+            life,
+            max_life,
+            HP_COLOR,
+            font_small,
+            font_label,
+        )
+        card_y += 64
+
+        _draw_stat_card(
+            screen,
+            card_x,
+            card_y,
+            card_w,
+            52,
+            "ARMURE",
+            armor,
+            max_armor,
+            ARMOR_COLOR,
+            font_small,
+            font_label,
+        )
+
+    draw_fighter(
+        "JOUEUR 1",
+        entities.j1.life,
+        entities.j1.max_life,
+        entities.j1.armor,
+        entities.j1.max_armor,
+        side=-1,
+        accent=ACCENT,
+    )
+    draw_fighter(
+        "JOUEUR 2",
+        entities.j2.life,
+        entities.j2.max_life,
+        entities.j2.armor,
+        entities.j2.max_armor,
+        side=1,
+        accent=ACCENT_J2,
+    )
+
+    # ── Boutons d'action ─────────────────────────────────────────
+    btn_w, btn_h = 180, 50
+    spacing = 20
+    total_w = btn_w * 2 + spacing
+    b1_x = cx - total_w // 2
+    b2_x = b1_x + btn_w + spacing
+    by = sh - 160
+
+    bouton.attaquer_bt.x, bouton.attaquer_bt.y = b1_x, by
+    bouton.attaquer_bt.width, bouton.attaquer_bt.height = btn_w, btn_h
+    atk_rect = pygame.Rect(b1_x, by, btn_w, btn_h)
+    pygame.draw.rect(screen, BTN_ATTACK, atk_rect, border_radius=6)
+    atk_surf = font_btn.render(bouton.attaquer_txt, True, TEXT_MAIN)
+    screen.blit(
+        atk_surf,
+        (
+            b1_x + (btn_w - atk_surf.get_width()) // 2,
+            by + (btn_h - atk_surf.get_height()) // 2,
+        ),
+    )
+
+    bouton.soin_bt.x, bouton.soin_bt.y = b2_x, by
+    bouton.soin_bt.width, bouton.soin_bt.height = btn_w, btn_h
+    heal_rect = pygame.Rect(b2_x, by, btn_w, btn_h)
+    pygame.draw.rect(screen, CARD_BG, heal_rect, border_radius=6)
+    pygame.draw.rect(screen, BTN_HEAL, heal_rect, width=1, border_radius=6)
+    heal_surf = font_btn.render(bouton.soin_txt, True, BTN_HEAL)
+    screen.blit(
+        heal_surf,
+        (
+            b2_x + (btn_w - heal_surf.get_width()) // 2,
+            by + (btn_h - heal_surf.get_height()) // 2,
+        ),
     )

@@ -5,24 +5,20 @@ from parametres import xbouton, ybouton, largeur_bouton, hauteur_bouton
 Jouer_bt = pygame.Rect(xbouton, ybouton - 70, largeur_bouton, hauteur_bouton)
 Jouer_txt = "Appuyez pour jouer"
 
-parametre_bt = pygame.Rect(
-    xbouton, ybouton, largeur_bouton, hauteur_bouton, border_radius=1000
-)
+parametre_bt = pygame.Rect(xbouton, ybouton, largeur_bouton, hauteur_bouton)
 parametre_txt = "paramètre"
 
-rules_bt = pygame.Rect(
-    xbouton, ybouton + 70, largeur_bouton, hauteur_bouton, border_radius=1000
-)
+rules_bt = pygame.Rect(xbouton, ybouton + 70, largeur_bouton, hauteur_bouton)
 rules_txt = "Règles du jeu"
 
 exit_bt = pygame.Rect(
-    xbouton - 600,
-    ybouton - 400,
-    largeur_bouton // 3,
-    hauteur_bouton // 2,
-    border_radius=1000,
+    xbouton - 600, ybouton - 400, largeur_bouton // 3, hauteur_bouton // 2
 )
 exit_txt = "exit"
+
+jcj_bt = pygame.Rect(0, 0, 240, 50)
+jcj_txt = "Affrontez vous"
+
 
 # boutons du mode de combat :
 

@@ -18,6 +18,7 @@ taille_grille = 40
 etat_du_jeu = "menu"
 wave_number = 1
 tour_de = None
+tour_de_jcj = None
 
 tour_deplacement = "joueur"
 deplacement_joueur_max = 6

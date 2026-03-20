@@ -71,41 +71,50 @@ def afficher_texte(texte, x, y, largeur, hauteur, couleur, taille):
     screen.blit(rendu, ((x + largeur // 2) - 100, y + hauteur // 2))
 
 
-def contenue_grille(grille):
+def contenue_grille(grille, num):
     # place des mobs aleatoirement dans la grille de jeu principale
     # le nombre de mob varie selon la difficulté et la vague en cours
 
-    if (
-        parametres.facile_clicked == False
-        or parametres.moyen_clicked == False
-        or parametres.difficile_clicked == False
-    ):
-        difficulter = parametres.difficulter_defaut
-    if parametres.facile_clicked == True:
-        difficulter = 3
-        parametres.nb_item_defaut = 5
-    if parametres.moyen_clicked == True:
-        difficulter = 6
-        parametres.nb_item_defaut = 4
-    if parametres.difficile_clicked == True:
-        difficulter = 9
-        parametres.nb_item_defaut = 3
+    if num == 2:
+        for i in range(parametres.nb_item_defaut):
+            x = random.randint(0, parametres.taille_grille - 1)
+            y = random.randint(0, parametres.taille_grille - 1)
 
-    nb_enemie = parametres.wave_number * difficulter
+            if grille[x, y].contenu == None:
+                grille[x, y].contenu = random.choice((entities.armure, entities.soin))
 
-    for i in range(nb_enemie):
-        x = random.randint(0, parametres.taille_grille - 1)
-        y = random.randint(0, parametres.taille_grille - 1)
+    else:
+        if (
+            parametres.facile_clicked == False
+            or parametres.moyen_clicked == False
+            or parametres.difficile_clicked == False
+        ):
+            difficulter = parametres.difficulter_defaut
+        if parametres.facile_clicked == True:
+            difficulter = 3
+            parametres.nb_item_defaut = 5
+        if parametres.moyen_clicked == True:
+            difficulter = 6
+            parametres.nb_item_defaut = 4
+        if parametres.difficile_clicked == True:
+            difficulter = 9
+            parametres.nb_item_defaut = 3
 
-        if grille[x, y].contenu == None:
-            grille[x, y].contenu = entities.Mob(x, y)
+        nb_enemie = parametres.wave_number * difficulter
 
-    for i in range(parametres.nb_item_defaut):
-        x = random.randint(0, parametres.taille_grille - 1)
-        y = random.randint(0, parametres.taille_grille - 1)
+        for i in range(nb_enemie):
+            x = random.randint(0, parametres.taille_grille - 1)
+            y = random.randint(0, parametres.taille_grille - 1)
 
-        if grille[x, y].contenu == None:
-            grille[x, y].contenu = random.choice((entities.armure, entities.soin))
+            if grille[x, y].contenu == None:
+                grille[x, y].contenu = entities.Mob(x, y)
+
+        for i in range(parametres.nb_item_defaut):
+            x = random.randint(0, parametres.taille_grille - 1)
+            y = random.randint(0, parametres.taille_grille - 1)
+
+            if grille[x, y].contenu == None:
+                grille[x, y].contenu = random.choice((entities.armure, entities.soin))
 
 
 def tour():
@@ -114,9 +123,11 @@ def tour():
 
     if tour % 2 == 0:
         parametres.tour_de = "Joueur"
+        parametres.tour_de_jcj = "j1"
 
     elif tour % 2 != 0:
         parametres.tour_de = "enemi"
+        parametres.tour_de_jcj = "j2"
 
 
 def player_can_move(direction):
@@ -136,21 +147,49 @@ def player_can_move(direction):
 
 def player_rencontre(grille):
     # verifie si le joueur se trouve sur la meme case qu'un mob ou un objet
-    contenu = grille[entities.j1.x, entities.j1.y].contenu
 
-    if isinstance(contenu, entities.Mob):
-        parametres.etat_du_jeu = "combat"
-        parametres.tour_deplacement = None
-        entities.ennemi_en_combat = grille[entities.j1.x, entities.j1.y].contenu
+    if parametres.tour_de_jcj == "j1":
 
-    elif isinstance(contenu, entities.Objet):
-        if contenu == entities.armure:
-            contenu.proteger()
-            grille[entities.j1.x, entities.j1.y].contenu = None
+        contenu = grille[entities.j1.x, entities.j1.y].contenu
 
-        elif contenu == entities.soin:
-            entities.j1.inventaire.append(contenu)
-            grille[entities.j1.x, entities.j1.y].contenu = None
+        if parametres.etat_du_jeu == "jcj":
+            if (entities.j1.x, entities.j1.y) == (entities.j2.x, entities.j2.y):
+                parametres.etat_du_jeu = "combat_jcj"
+
+        if isinstance(contenu, entities.Mob):
+            parametres.etat_du_jeu = "combat"
+            parametres.tour_deplacement = None
+            entities.ennemi_en_combat = grille[entities.j1.x, entities.j1.y].contenu
+
+        elif isinstance(contenu, entities.Objet):
+            if contenu == entities.armure:
+                contenu.proteger()
+                grille[entities.j1.x, entities.j1.y].contenu = None
+
+            elif contenu == entities.soin:
+                entities.j1.inventaire.append(contenu)
+                grille[entities.j1.x, entities.j1.y].contenu = None
+
+    else:
+        contenu = grille[entities.j2.x, entities.j2.y].contenu
+
+        if parametres.etat_du_jeu == "jcj":
+            if (entities.j1.x, entities.j1.y) == (entities.j2.x, entities.j2.y):
+                parametres.etat_du_jeu = "combat_jcj"
+
+        if isinstance(contenu, entities.Mob):
+            parametres.etat_du_jeu = "combat"
+            parametres.tour_deplacement = None
+            entities.ennemi_en_combat = grille[entities.j2.x, entities.j2.y].contenu
+
+        elif isinstance(contenu, entities.Objet):
+            if contenu == entities.armure:
+                contenu.proteger()
+                grille[entities.j2.x, entities.j2.y].contenu = None
+
+            elif contenu == entities.soin:
+                entities.j2.inventaire.append(contenu)
+                grille[entities.j2.x, entities.j2.y].contenu = None
 
 
 def etat_precedent(loop):
@@ -164,15 +203,13 @@ def etat_precedent(loop):
         or parametres.etat_du_jeu == "parametre"
         or parametres.etat_du_jeu == "rules"
         or parametres.etat_du_jeu == "mort"
+        or parametres.etat_du_jeu == "jcj"
     ):
         parametres.etat_du_jeu = "menu"
 
     if parametres.etat_du_jeu == "niveau":
         parametres.etat_du_jeu = "play"
-        
-    if parametres.etat_du_jeu == "combat":
-        parametres.etat_du_jeu = "play"
-        entities.ennemi_en_combat = None
+
 
 def reset_grille(grille):
     # nettoie la grille apres la mort du joueur et la rend prete a reprendre une partie
