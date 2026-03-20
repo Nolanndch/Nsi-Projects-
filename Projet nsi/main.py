@@ -89,15 +89,15 @@ while loop:
 
             if parametres.etat_du_jeu == "combat_jcj":  # deroulement du combat en jcj
 
-                if parametres.tour_de == "j1":  # verfifie le tour du joueur
+                if parametres.tour_de_jcj == "j1":  # verfifie le tour du joueur
 
                     if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
                         entities.j1.attaquer(entities.j2)
 
-                if parametres.tour_de == "j2":  # verfifie le tour du joueur
+                if parametres.tour_de_jcj == "j2":  # verfifie le tour du joueur
 
                     if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
-                        entities.j1.attaquer(entities.j2)
+                        entities.j2.attaquer(entities.j1)
 
     if parametres.etat_du_jeu == "menu":
         UI.menu(screen)
