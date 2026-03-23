@@ -148,7 +148,7 @@ def player_can_move(direction):
 def player_rencontre(grille):
     # verifie si le joueur se trouve sur la meme case qu'un mob ou un objet
 
-    if parametres.tour_de_jcj == "j1":
+    if parametres.tour_de_jcj == "j1" or parametres.etat_du_jeu == "play":
 
         contenu = grille[entities.j1.x, entities.j1.y].contenu
 
@@ -216,7 +216,7 @@ def reset_grille(grille):
     for cell in grille.values():
         cell.contenu = None
 
-    contenue_grille(grille)
+    contenue_grille(grille, 2)
 
 
 def draw_health_bar(

@@ -1026,7 +1026,6 @@ def jcj(screen, grille_jeu, joueur1, joueur2):
     )
 
 
-# ── COMBAT JCJ ───────────────────────────────────────────────────────────────
 def combat_jcj(screen):
     BG_COLOR = (13, 16, 23)
     PANEL_BORDER = (40, 46, 60)
@@ -1092,7 +1091,7 @@ def combat_jcj(screen):
             card_w,
             52,
             "VIE",
-            life,
+            life,  # ← était entities.j1.life en dur pour les deux
             max_life,
             HP_COLOR,
             font_small,
@@ -1107,7 +1106,7 @@ def combat_jcj(screen):
             card_w,
             52,
             "ARMURE",
-            armor,
+            armor,  # ← était aussi incorrect
             max_armor,
             ARMOR_COLOR,
             font_small,

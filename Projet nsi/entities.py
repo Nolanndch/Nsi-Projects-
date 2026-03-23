@@ -17,10 +17,10 @@ class Player:  # classe des joueurs
         self.xp = 0
         self.niveau = 0
 
-    def attaquer(self, mob):
-        mob.life -= self.power
+    def attaquer(self, enemi):
+        enemi.life -= self.power
 
-    def soigner(self, pv):
+    def soigner(self):
         if self.life + soin.pv <= self.max_life and soin in self.inventaire:
             self.life += soin.pv
             self.inventaire.pop()

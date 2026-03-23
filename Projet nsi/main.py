@@ -92,12 +92,32 @@ while loop:
                 if parametres.tour_de_jcj == "j1":  # verfifie le tour du joueur
 
                     if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
-                        entities.j1.attaquer(entities.j2)
+                        temps_actuel = pygame.time.get_ticks()
+                        if (
+                            temps_actuel - parametres.dernier_changement
+                            > parametres.delai_combat
+                        ):
+                            entities.j1.attaquer(entities.j2)
+                            parametres.tour_de_jcj = "j2"
+                            parametres.dernier_changement = temps_actuel
+                            # mort du joueur
+                            if entities.j2.life <= 1:
+                                parametres.etat_du_jeu = "mort"
 
                 if parametres.tour_de_jcj == "j2":  # verfifie le tour du joueur
 
                     if bouton.attaquer_bt.collidepoint(pygame.mouse.get_pos()):
-                        entities.j2.attaquer(entities.j1)
+                        temps_actuel = pygame.time.get_ticks()
+                        if (
+                            temps_actuel - parametres.dernier_changement
+                            > parametres.delai_combat
+                        ):
+                            entities.j2.attaquer(entities.j1)
+                            parametres.tour_de_jcj = "j1"
+                            parametres.dernier_changement = temps_actuel
+                            # mort du joueur
+                            if entities.j1.life <= 1:
+                                parametres.etat_du_jeu = "mort"
 
     if parametres.etat_du_jeu == "menu":
         UI.menu(screen)
@@ -292,8 +312,8 @@ while loop:
                     parametres.tour_de_jcj = "j1"
                     entities.j2.nb_deplacement = 0
 
-        if parametres.etat_du_jeu == "combat_jcj":
-            UI.combat_jcj(screen)
+    if parametres.etat_du_jeu == "combat_jcj":
+        UI.combat_jcj(screen)
 
     pygame.display.flip()
 
