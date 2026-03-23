@@ -218,7 +218,10 @@ def reset_grille(grille):
     for cell in grille.values():
         cell.contenu = None
 
-    contenue_grille(grille, 2)
+    if parametres.etat_du_jeu == "jcj":
+        contenue_grille(grille, 2)
+    else:
+        contenue_grille(grille, 1)
 
 
 def draw_health_bar(
