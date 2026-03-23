@@ -70,7 +70,7 @@ while loop:
                         parametres.dernier_changement = pygame.time.get_ticks()
 
                     if bouton.soin_bt.collidepoint(pygame.mouse.get_pos()):
-                        entities.j1.soigner(5)
+                        entities.j1.soigner()
 
             if parametres.etat_du_jeu == "niveau":  # selection de l'amelioration
 
@@ -102,7 +102,10 @@ while loop:
                             parametres.dernier_changement = temps_actuel
                             # mort du joueur
                             if entities.j2.life <= 1:
-                                parametres.etat_du_jeu = "mort"
+                                parametres.etat_du_jeu = "victoire_j1"
+
+                    if bouton.soin_bt.collidepoint(pygame.mouse.get_pos()):
+                        entities.j2.soigner()
 
                 if parametres.tour_de_jcj == "j2":  # verfifie le tour du joueur
 
@@ -117,7 +120,10 @@ while loop:
                             parametres.dernier_changement = temps_actuel
                             # mort du joueur
                             if entities.j1.life <= 1:
-                                parametres.etat_du_jeu = "mort"
+                                parametres.etat_du_jeu = "victoire_j1"
+
+                    if bouton.soin_bt.collidepoint(pygame.mouse.get_pos()):
+                        entities.j2.soigner()
 
     if parametres.etat_du_jeu == "menu":
         UI.menu(screen)
@@ -314,6 +320,12 @@ while loop:
 
     if parametres.etat_du_jeu == "combat_jcj":
         UI.combat_jcj(screen)
+
+    if parametres.etat_du_jeu == "victoire_j1":
+        UI.victoire(screen, 1)
+
+    if parametres.etat_du_jeu == "victoire_j2":
+        UI.victoire(screen, 2)
 
     pygame.display.flip()
 

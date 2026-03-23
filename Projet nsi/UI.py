@@ -1166,3 +1166,52 @@ def combat_jcj(screen):
             by + (btn_h - heal_surf.get_height()) // 2,
         ),
     )
+
+
+def victoire(screen, joueur_gagnant):
+    BG_COLOR = (13, 16, 23)
+    PANEL_BORDER = (40, 46, 60)
+    CARD_BG = (24, 28, 38)
+    TEXT_MAIN = (230, 235, 245)
+    TEXT_MUTED = (110, 120, 145)
+    ACCENT = (99, 179, 237) if joueur_gagnant == 1 else (251, 113, 133)
+    XP_COLOR = (250, 204, 21)
+
+    sw, sh = screen.get_width(), screen.get_height()
+    screen.fill(BG_COLOR)
+
+    font_big = pygame.font.SysFont("Courier New", 58, bold=True)
+    font_sub = pygame.font.SysFont("Courier New", 18)
+    font_label = pygame.font.SysFont("Courier New", 15)
+
+    # Titre
+    titre = f"JOUEUR {joueur_gagnant} GAGNE !"
+    titre_surf = font_big.render(titre, True, ACCENT)
+    screen.blit(titre_surf, (sw // 2 - titre_surf.get_width() // 2, sh // 2 - 100))
+
+    # Ligne déco
+    pygame.draw.line(
+        screen, ACCENT, (sw // 2 - 120, sh // 2 - 10), (sw // 2 + 120, sh // 2 - 10), 1
+    )
+
+    # Sous-titre
+    sub_surf = font_sub.render("l'adversaire est tombé au combat", True, TEXT_MUTED)
+    screen.blit(sub_surf, (sw // 2 - sub_surf.get_width() // 2, sh // 2 + 10))
+
+    # Bouton retour menu
+    btn_w, btn_h = 240, 50
+    btn_x = sw // 2 - btn_w // 2
+    btn_y = sh // 2 + 80
+    bouton.exit_bt.x, bouton.exit_bt.y = btn_x, btn_y
+    bouton.exit_bt.width, bouton.exit_bt.height = btn_w, btn_h
+    btn_rect = pygame.Rect(btn_x, btn_y, btn_w, btn_h)
+    pygame.draw.rect(screen, CARD_BG, btn_rect, border_radius=6)
+    pygame.draw.rect(screen, ACCENT, btn_rect, width=1, border_radius=6)
+    lbl = font_label.render("RETOUR AU MENU", True, ACCENT)
+    screen.blit(
+        lbl,
+        (
+            btn_x + (btn_w - lbl.get_width()) // 2,
+            btn_y + (btn_h - lbl.get_height()) // 2,
+        ),
+    )

@@ -204,6 +204,8 @@ def etat_precedent(loop):
         or parametres.etat_du_jeu == "rules"
         or parametres.etat_du_jeu == "mort"
         or parametres.etat_du_jeu == "jcj"
+        or parametres.etat_du_jeu == "victoire_j1"
+        or parametres.etat_du_jeu == "victoire_j2"
     ):
         parametres.etat_du_jeu = "menu"
 
