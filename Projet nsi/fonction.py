@@ -161,7 +161,7 @@ def player_rencontre(grille):
             parametres.tour_deplacement = None
             entities.ennemi_en_combat = grille[entities.j1.x, entities.j1.y].contenu
 
-        elif isinstance(contenu, entities.Objet):
+        if isinstance(contenu, entities.Objet):
             if contenu == entities.armure:
                 contenu.proteger()
                 grille[entities.j1.x, entities.j1.y].contenu = None
@@ -272,12 +272,13 @@ def change_dificulty(dificulty, grille):
 
 def refill(grille):
     # replace des mobs et objets dans la grille si elle est vide
-    mobs = 0
-    for cell in grille.values():
-        if isinstance(cell.contenu, entities.Mob):
-            mobs += 1
-    if mobs == 0:
-        contenue_grille(grille)
+    mobs = [
+        cell.contenu
+        for cell in grille.values()
+        if isinstance(cell.contenu, entities.Mob)
+    ]
+    if mobs == []:
+        reset_grille(grille)
 
 
 def recompense(grille):

@@ -193,11 +193,11 @@ while loop:
 
         if entities.ennemi_en_combat.life <= 0:  # mort de l'enemi
             niveau1 = entities.j1.niveau
-            fonction.refill(grille_jeu)
             fonction.recompense(grille_jeu)
             grille_jeu[
                 entities.ennemi_en_combat.x, entities.ennemi_en_combat.y
             ].contenu = None
+            fonction.refill(grille_jeu)
             entities.ennemi_en_combat = None
             parametres.tour_deplacement = "joueur"
             entities.j1.gain_xp()

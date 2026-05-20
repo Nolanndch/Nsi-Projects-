@@ -10,7 +10,7 @@ class Player:  # classe des joueurs
         self.max_life = 50
         self.armor = 0
         self.max_armor = 50
-        self.power = 10
+        self.power = 100
         self.couleur = parametres.NOIR
         self.inventaire = []
         self.nb_deplacement = 0
